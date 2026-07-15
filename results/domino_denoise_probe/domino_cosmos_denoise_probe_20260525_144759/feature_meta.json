@@ -1,0 +1,29 @@
+{
+  "feature_path": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/features.npy",
+  "shape": [
+    3600,
+    9,
+    3,
+    2048
+  ],
+  "dtype": "<class 'numpy.float16'>",
+  "sources": [
+    "raw_no_denoise",
+    "denoise_tau=0.900",
+    "denoise_tau=0.750",
+    "denoise_tau=0.600",
+    "denoise_tau=0.450",
+    "denoise_tau=0.300",
+    "denoise_tau=0.200",
+    "denoise_tau=0.100",
+    "denoise_tau=0.000"
+  ],
+  "layers": [
+    6,
+    14,
+    27
+  ],
+  "hidden_size": 2048,
+  "feature_pool": "future_only",
+  "notes": "raw_no_denoise uses clean history latents only; denoise_tau=* uses clean history condition latents plus random future latent slots. No future pixels are fed to Cosmos."
+}

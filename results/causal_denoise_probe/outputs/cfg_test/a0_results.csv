@@ -1,0 +1,2 @@
+mode,sigma_start,denoise_steps,target_latent_idx,prev_latent_baseline_cos,noisy_input_cos,latent_cos_pred_x0,latent_mse_pred_x0,cos_pred_x0_vs_baseline_diff,hidden_cos
+A0_noised_true_future,0.8,0,1,0.8280352354049683,0.17091882228851318,0.13623027503490448,0.7739124298095703,-0.6918049603700638,0.6192460656166077

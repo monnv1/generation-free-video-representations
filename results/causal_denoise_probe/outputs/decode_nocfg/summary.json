@@ -1,0 +1,46 @@
+{
+  "config": {
+    "model_dir": "/data/repos/starVLA/playground/Pretrained_models/nvidia/Cosmos-Predict2-2B-Video2World",
+    "video": "/data/repos/cosmos-predict2.5/assets/base/robot_pouring.mp4",
+    "prompt": "/data/repos/cosmos-predict2.5/assets/base/robot_pouring.txt",
+    "output_dir": "/data/repos/cosmos_causal_probe/outputs/decode_nocfg",
+    "frame_start": 0,
+    "frame_stride": 1,
+    "cond_frames": 1,
+    "future_pixel_frames": 4,
+    "height": 704,
+    "width": 1280,
+    "fps": 16,
+    "sigmas": [
+      0.8
+    ],
+    "denoise_steps": [
+      20
+    ],
+    "seed": 123,
+    "dtype": "bfloat16",
+    "device": "cuda",
+    "hook_layer": -1,
+    "sigma_conditioning": 0.0001,
+    "vae_sample_mode": "sample",
+    "offload_encoders": false,
+    "neg_prompt": "",
+    "guidance_scale": 1.0
+  },
+  "timestamp": "2026-05-21T16:45:25Z",
+  "latent_shape": [
+    1,
+    16,
+    2,
+    88,
+    160
+  ],
+  "cond_latent_frames": 1,
+  "target_latent_idx": 1,
+  "vae_scale_factor_temporal": 4,
+  "notes": [
+    "A1 initializes the future latent slot from pure noise scaled by sigma_start.",
+    "K=1 means one transformer forward plus one Euler update to sigma_min.",
+    "Cosmos pipeline preconditioning uses c_in=c_skip=1/(sigma+1), not EDM 1/sqrt(sigma^2+1)."
+  ]
+}

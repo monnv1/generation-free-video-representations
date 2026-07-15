@@ -1,0 +1,9 @@
+output_root: /data/repos/cosmos_causal_probe/outputs/save_latents_test
+runs: 1
+A1 rows: 16
+A0 rows: 4
+
+Best A1 by history:
+  cond_frames=5 cond_lat=2 future_slots=8 cfg=7.0 sigma=2.0 K=15 x_final=0.1804 gain=-0.7088 seq=0.0103 seq_gain=-0.8050 pred=0.1806 hidden=0.8992
+
+Best overall: cond_frames=5 future_slots=8 cfg=7.0 sigma=2.0 K=15 gain=-0.7088 x_final=0.1804 seq_gain=-0.8050

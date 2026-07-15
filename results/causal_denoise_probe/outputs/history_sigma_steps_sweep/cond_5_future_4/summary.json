@@ -1,0 +1,58 @@
+{
+  "config": {
+    "model_dir": "/data/repos/starVLA/playground/Pretrained_models/nvidia/Cosmos-Predict2-2B-Video2World",
+    "video": "/data/repos/cosmos-predict2.5/assets/base/robot_pouring.mp4",
+    "prompt": "/data/repos/cosmos-predict2.5/assets/base/robot_pouring.txt",
+    "output_dir": "/data/repos/cosmos_causal_probe/outputs/history_sigma_steps_sweep/cond_5_future_4",
+    "frame_start": 0,
+    "frame_stride": 1,
+    "cond_frames": 5,
+    "future_pixel_frames": 4,
+    "height": 704,
+    "width": 1280,
+    "fps": 16,
+    "sigmas": [
+      0.002,
+      0.05,
+      0.1,
+      0.2,
+      0.3,
+      0.5,
+      0.8,
+      1.0,
+      2.0,
+      5.0
+    ],
+    "denoise_steps": [
+      1,
+      3,
+      5,
+      10,
+      20,
+      35
+    ],
+    "seed": 123,
+    "dtype": "bfloat16",
+    "device": "cuda",
+    "hook_layer": -1,
+    "sigma_conditioning": 0.0001,
+    "vae_sample_mode": "sample",
+    "offload_encoders": true
+  },
+  "timestamp": "2026-05-21T15:18:27Z",
+  "latent_shape": [
+    1,
+    16,
+    3,
+    88,
+    160
+  ],
+  "cond_latent_frames": 2,
+  "target_latent_idx": 2,
+  "vae_scale_factor_temporal": 4,
+  "notes": [
+    "A1 initializes the future latent slot from pure noise scaled by sigma_start.",
+    "K=1 means one transformer forward plus one Euler update to sigma_min.",
+    "Cosmos pipeline preconditioning uses c_in=c_skip=1/(sigma+1), not EDM 1/sqrt(sigma^2+1)."
+  ]
+}

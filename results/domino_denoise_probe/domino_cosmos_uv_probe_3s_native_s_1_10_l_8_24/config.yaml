@@ -1,0 +1,63 @@
+run:
+  run_id: domino_cosmos_uv_probe_3s_native_s_1_10_l_8_24
+  output_root: /data/repos/domino_cosmos_denoise_probe/results
+  seed: 42
+data:
+  root: /data/datasets/DOMINO_new
+  tasks:
+  - adjust_bottle
+  - move_playingcard_away
+  - click_bell
+  camera: observation.images.cam_high
+  history_frames: 5
+  future_frames: 45
+  horizons:
+  - 8
+  - 16
+  - 24
+  - 36
+  - 45
+  max_slices_per_task: 1200
+  train_fraction: 0.7
+  val_fraction: 0.15
+  image_width: 320
+  image_height: 240
+extract:
+  workers: 2
+cosmos:
+  model_path: /data/repos/starVLA/playground/Pretrained_models/nvidia/Cosmos-Predict2-2B-Video2World
+  device: cuda
+  dtype: bfloat16
+  layers:
+  - 8
+  - 12
+  - 16
+  - 20
+  - 24
+  num_inference_steps: 35
+  capture_steps:
+  - 1
+  - 3
+  - 5
+  - 7
+  cfg_scale: 7.0
+  negative_prompt: ''
+  fps: 15
+  batch_size: 1
+  feature_pool: future_steps
+  save_dtype: float16
+  offload_text_vae_after_encode: true
+uv_probe:
+  epochs: 60
+  batch_size: 128
+  lr: 0.0003
+  weight_decay: 1.0e-06
+  hidden_dim: 512
+  depth: 2
+  dropout: 0.05
+  patience: 10
+  train_current_for_all_sources: false
+  save_checkpoints: true
+  save_optimizer: false
+  save_current_checkpoints: true
+  checkpoint_dir: uv_probe_ckpts

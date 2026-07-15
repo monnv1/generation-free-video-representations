@@ -1,0 +1,58 @@
+{
+  "config": {
+    "model_dir": "/data/repos/starVLA/playground/Pretrained_models/nvidia/Cosmos-Predict2-2B-Video2World",
+    "video": "/data/repos/cosmos-predict2.5/assets/base/robot_pouring.mp4",
+    "prompt": "/data/repos/cosmos-predict2.5/assets/base/robot_pouring.txt",
+    "negative_prompt": "",
+    "output_dir": "/data/repos/cosmos_causal_probe/outputs/save_latents_test/cond_5_slots_8_neg_empty",
+    "frame_start": 0,
+    "frame_stride": 1,
+    "cond_frames": 5,
+    "future_pixel_frames": 32,
+    "height": 704,
+    "width": 1280,
+    "fps": 16,
+    "sigmas": [
+      1.0,
+      2.0
+    ],
+    "denoise_steps": [
+      3,
+      5,
+      10,
+      15
+    ],
+    "guidance_scales": [
+      1.0,
+      7.0
+    ],
+    "future_latent_slots": 8,
+    "seed": 123,
+    "dtype": "bfloat16",
+    "device": "cuda",
+    "hook_layer": -1,
+    "sigma_conditioning": 0.0001,
+    "vae_sample_mode": "sample",
+    "offload_encoders": true,
+    "save_latents": true,
+    "save_latent_dtype": "bfloat16"
+  },
+  "timestamp": "2026-05-22T06:22:08Z",
+  "latent_shape": [
+    1,
+    16,
+    10,
+    88,
+    160
+  ],
+  "cond_latent_frames": 2,
+  "target_latent_idx": 2,
+  "vae_scale_factor_temporal": 4,
+  "notes": [
+    "A1 initializes all requested future latent slots from pure noise scaled by sigma_start.",
+    "future_latent_slots controls how many future slots are denoised jointly with temporal self-attention.",
+    "guidance_scale > 1 runs an additional negative-prompt branch and applies Cosmos CFG.",
+    "K=1 means one transformer forward plus one Euler update to sigma_min.",
+    "Cosmos pipeline preconditioning uses c_in=c_skip=1/(sigma+1), not EDM 1/sqrt(sigma^2+1)."
+  ]
+}

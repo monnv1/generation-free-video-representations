@@ -1,0 +1,69 @@
+{
+  "uv_summary_csv": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_uv_probe_3s_native_s_1_10_l_8_24/uv_summary.csv",
+  "uv_metrics_csv": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_uv_probe_3s_native_s_1_10_l_8_24/uv_per_source_layer_metrics.csv",
+  "uv_training_curves_csv": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_uv_probe_3s_native_s_1_10_l_8_24/uv_probe_training_curves.csv",
+  "uv_checkpoint_dir": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_uv_probe_3s_native_s_1_10_l_8_24/uv_probe_ckpts",
+  "best_future_uv_denoise_vs_raw": {
+    "layer": 24,
+    "source": "denoise_step=007",
+    "target": "future_uv",
+    "test_loss": 0.0384341455749226,
+    "loss_improvement_vs_raw": -1.4437429960609016,
+    "uv_mse_norm": 0.0384341455749226,
+    "uv_rmse_norm": 0.1936399203958471,
+    "uv_mae_norm": 0.1598477437937975,
+    "uv_mae_px": 44.99950410515132,
+    "uv_mae_px_improvement_vs_raw": -0.6690027796954195,
+    "valid_fraction": 0.4409937907943567,
+    "horizon": 8,
+    "future_step": 1,
+    "future_step_1based": 2
+  },
+  "raw_current_uv_sanity": [
+    {
+      "layer": 8,
+      "source": "raw_no_denoise",
+      "target": "current_uv_sanity",
+      "test_loss": 0.0145968984423,
+      "uv_mae_norm": 0.0847858926879076,
+      "uv_mae_px": 24.056314476281717,
+      "valid_fraction": 0.480331267752756
+    },
+    {
+      "layer": 12,
+      "source": "raw_no_denoise",
+      "target": "current_uv_sanity",
+      "test_loss": 0.0171194189135563,
+      "uv_mae_norm": 0.096905156468691,
+      "uv_mae_px": 27.7209602774547,
+      "valid_fraction": 0.480331267752756
+    },
+    {
+      "layer": 16,
+      "source": "raw_no_denoise",
+      "target": "current_uv_sanity",
+      "test_loss": 0.0171051789335443,
+      "uv_mae_norm": 0.0904041598965539,
+      "uv_mae_px": 25.558956292351827,
+      "valid_fraction": 0.480331267752756
+    },
+    {
+      "layer": 20,
+      "source": "raw_no_denoise",
+      "target": "current_uv_sanity",
+      "test_loss": 0.0204336806711418,
+      "uv_mae_norm": 0.1036153438637962,
+      "uv_mae_px": 29.20442333181946,
+      "valid_fraction": 0.480331267752756
+    },
+    {
+      "layer": 24,
+      "source": "raw_no_denoise",
+      "target": "current_uv_sanity",
+      "test_loss": 0.0207988245674943,
+      "uv_mae_norm": 0.101774040277947,
+      "uv_mae_px": 28.788380158860736,
+      "valid_fraction": 0.480331267752756
+    }
+  ]
+}

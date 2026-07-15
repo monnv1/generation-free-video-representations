@@ -1,0 +1,750 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WM Latent Dynamic Policy Pipeline</title>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [["\\(", "\\)"]],
+        displayMath: [["\\[", "\\]"]]
+      },
+      svg: { fontCache: "global" },
+      startup: { typeset: false }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/dagre@0.8.5/dist/dagre.min.js"></script>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --surface-2: #f8fafc;
+      --ink: #121926;
+      --muted: #5f6b7a;
+      --border: #d7dfeb;
+      --line: #344054;
+      --inactive: #a4adbb;
+      --train: #d92d20;
+      --train-bg: #fff1f0;
+      --train-soft: #fee4e2;
+      --frozen: #2563eb;
+      --frozen-bg: #eff6ff;
+      --frozen-soft: #dbeafe;
+      --loss: #b42318;
+      --label-bg: #fff7ed;
+      --shadow: 0 18px 54px rgba(16, 24, 40, 0.10);
+      --radius: 8px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+
+    .page {
+      width: min(1480px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 24px 0 42px;
+    }
+
+    header {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(25px, 3vw, 40px);
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin: 0;
+      max-width: 1120px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 18px 0;
+    }
+
+    button {
+      min-height: 44px;
+      border: 1px solid #c7d0dc;
+      background: #fff;
+      color: #243044;
+      border-radius: var(--radius);
+      padding: 10px 14px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
+    }
+
+    button:hover { border-color: #7d8da3; }
+    button:focus-visible {
+      outline: 3px solid rgba(37, 99, 235, 0.32);
+      outline-offset: 2px;
+    }
+    button.active {
+      color: #fff;
+      background: #121926;
+      border-color: #121926;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(340px, 420px);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .board, .side, .idea {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .board {
+      padding: 18px;
+      min-height: 650px;
+      overflow: hidden;
+    }
+
+    .board-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .board-head h2 {
+      margin: 0;
+      font-size: 21px;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      min-height: 30px;
+      padding: 4px 8px;
+      border: 1px solid #e5eaf2;
+      border-radius: 999px;
+      background: #fff;
+    }
+
+    .graph-viewport {
+      position: relative;
+      width: 100%;
+      min-height: 560px;
+      overflow: hidden;
+      border: 1px solid #edf1f7;
+      border-radius: var(--radius);
+      background:
+        linear-gradient(90deg, rgba(18, 25, 38, 0.035) 1px, transparent 1px),
+        linear-gradient(rgba(18, 25, 38, 0.035) 1px, transparent 1px),
+        #fff;
+      background-size: 28px 28px;
+    }
+
+    .graph-scale {
+      position: absolute;
+      left: 0;
+      top: 0;
+      transform-origin: top left;
+    }
+
+    .edge-layer {
+      position: absolute;
+      inset: 0;
+      overflow: visible;
+      pointer-events: none;
+    }
+
+    .edge-path {
+      fill: none;
+      stroke: var(--line);
+      stroke-width: 2.4;
+      marker-end: url(#arrow);
+      opacity: 0.92;
+    }
+
+    .edge-path.loss {
+      stroke: var(--loss);
+      stroke-dasharray: 7 5;
+      stroke-width: 2.6;
+    }
+
+    .edge-path.inactive {
+      stroke: var(--inactive);
+      opacity: 0.18;
+    }
+
+    .node {
+      position: absolute;
+      width: 244px;
+      min-height: 126px;
+      padding: 13px 14px;
+      border-radius: var(--radius);
+      background: #fff;
+      border: 2px solid #cfd8e6;
+      box-shadow: 0 10px 28px rgba(16, 24, 40, 0.08);
+      transition: opacity 160ms ease, filter 160ms ease, border-color 160ms ease, background 160ms ease;
+    }
+
+    .node.train {
+      background: var(--train-bg);
+      border-color: var(--train);
+      box-shadow: 0 12px 30px rgba(217, 45, 32, 0.12);
+    }
+
+    .node.frozen {
+      background: var(--frozen-bg);
+      border-color: var(--frozen);
+      box-shadow: 0 12px 30px rgba(37, 99, 235, 0.12);
+    }
+
+    .node.unused {
+      background: #f2f4f7;
+      border-color: #d0d5dd;
+      opacity: 0.42;
+      filter: grayscale(1);
+      box-shadow: none;
+    }
+
+    .node .topline {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 34px;
+      height: 28px;
+      padding: 0 8px;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 14px;
+      background: #eef2f6;
+      color: #344054;
+    }
+
+    .train .status { background: var(--train-soft); color: #912018; }
+    .frozen .status { background: var(--frozen-soft); color: #1d4ed8; }
+
+    .node h3 {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.25;
+    }
+
+    .node p {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .node .node-math {
+      display: block;
+      margin-top: 6px;
+      padding: 7px 8px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      color: #101828;
+      font-size: 13px;
+      overflow: hidden;
+    }
+
+    .edge-label {
+      position: absolute;
+      max-width: 158px;
+      padding: 4px 7px;
+      border-radius: 6px;
+      border: 1px solid #f1d28d;
+      background: var(--label-bg);
+      color: #7a4c00;
+      font-size: 12px;
+      font-weight: 750;
+      text-align: center;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .edge-label.loss {
+      border-color: #f2b8b5;
+      background: #fff5f5;
+      color: var(--loss);
+    }
+
+    .edge-label.inactive {
+      opacity: 0.15;
+      filter: grayscale(1);
+    }
+
+    .side {
+      padding: 20px;
+    }
+
+    .stage-top {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .side h2, .idea h2 {
+      margin: 0;
+      font-size: 21px;
+    }
+
+    .pill {
+      flex: 0 0 auto;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #eef2ff;
+      color: #334cc8;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .side p {
+      margin: 10px 0;
+      color: #344054;
+      font-size: 15px;
+    }
+
+    .side ul {
+      margin: 10px 0 0;
+      padding-left: 20px;
+    }
+
+    .side li {
+      margin: 7px 0;
+      color: #344054;
+      font-size: 15px;
+    }
+
+    .math-block {
+      margin: 12px 0;
+      padding: 13px;
+      border: 1px solid #e3e8f0;
+      background: #fbfcff;
+      border-radius: var(--radius);
+      overflow-x: auto;
+      font-size: 14px;
+    }
+
+    .idea {
+      margin-top: 16px;
+      padding: 22px;
+    }
+
+    .idea p {
+      margin: 9px 0;
+      color: #2d3748;
+      font-size: 16px;
+    }
+
+    .idea strong { color: #101828; }
+
+    @media (max-width: 1050px) {
+      .layout { grid-template-columns: 1fr; }
+      .side { order: -1; }
+      .board { min-height: 560px; }
+      .graph-viewport { min-height: 500px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>WM Latent → Control-Oriented Dynamics Latent → Dynamic Manipulation Policy</h1>
+      <p class="subtitle">
+        使用 Dagre 自动布局生成训练/推理数据流图。🔥 表示训练模块，🧊 表示冻结模块，灰色表示当前 stage 不参与；节点内部和右侧说明都由 MathJax 渲染公式。
+      </p>
+    </header>
+
+    <nav class="controls" aria-label="Stage selector">
+      <button class="active" type="button" data-stage="stage1">Stage 1: 训练动态提取器</button>
+      <button type="button" data-stage="stage2a">Stage 2a: 冻结 A 训练动作头</button>
+      <button type="button" data-stage="stage2b">Stage 2b: 联合微调 A + π</button>
+      <button type="button" data-stage="infer">Inference: 部署数据流</button>
+    </nav>
+
+    <section class="layout">
+      <section class="board" aria-label="Interactive training pipeline diagram">
+        <div class="board-head">
+          <h2>自动布局数据流图</h2>
+          <div class="legend" aria-label="Legend">
+            <span>🔥 train</span>
+            <span>🧊 frozen</span>
+            <span>灰色 unused</span>
+            <span>红色虚线 loss</span>
+          </div>
+        </div>
+        <div class="graph-viewport" id="graphViewport">
+          <div class="graph-scale" id="graphScale">
+            <svg class="edge-layer" id="edgeLayer" aria-hidden="true">
+              <defs>
+                <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="#344054"></path>
+                </marker>
+              </defs>
+            </svg>
+            <div id="nodeLayer"></div>
+            <div id="labelLayer"></div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="side">
+        <div class="stage-top">
+          <h2 id="stageHeading">Stage 1</h2>
+          <span id="stagePill" class="pill">🔥 A + C train</span>
+        </div>
+        <div id="stageDetail"></div>
+      </aside>
+    </section>
+
+    <section class="idea">
+      <h2>核心构想</h2>
+      <p>
+        <strong>我们发现 raw WM latent 直接用于动态操控并不可靠</strong>，因为其中动态信息与外观、语义、背景变化纠缠。
+        通过 object-level motion supervision，我们将其蒸馏成 <strong>control-oriented dynamics latent</strong>。
+      </p>
+      <p>
+        这个 latent 的目标不是只复现显式 pose/velocity，而是在保留可读动态量的同时，为动作头提供更有控制价值的隐含因素，
+        例如可接触性、相对运动、拦截时机和扰动恢复线索。
+      </p>
+      <p>
+        最终主张是：该 latent 相比 raw WM latent 更可控，相比显式 pose/velocity prediction 保留更多控制相关信息，
+        并能在速度变化、轨迹突变、延迟扰动下提升策略，同时不增加测试时 future generation。
+      </p>
+      <div class="math-block">
+        \[
+          \text{raw WM latent}
+          \xrightarrow[\text{object-level motion supervision}]{A}
+          \text{control-oriented dynamics latent } m_t
+          \xrightarrow{\pi}
+          \text{real-time dynamic manipulation}
+        \]
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const NODE_W = 244;
+    const NODE_H = 126;
+    const PADDING = 36;
+
+    const nodes = {
+      data: {
+        title: "Trajectory Sample",
+        body: "images, state, language",
+        math: "\\(I_{t-K:t}, q_{t-K:t}, l\\)"
+      },
+      e: {
+        title: "E: WM Backbone",
+        body: "world/video encoder",
+        math: "\\(z_{t-K:t}=E(I_{t-K:t})\\)"
+      },
+      a: {
+        title: "A: Dynamics Extractor",
+        body: "history latent to motion latent",
+        math: "\\(m_t=A(z_{t-K:t},q_{t-K:t})\\)"
+      },
+      c: {
+        title: "C: Dynamics Head",
+        body: "training / analysis reader",
+        math: "\\(\\hat{y}_t=C(m_t)\\)"
+      },
+      pi: {
+        title: "π: Action Head",
+        body: "predicts action chunk",
+        math: "\\(\\hat{a}_{t:t+H}=\\pi(z_t,m_t,q_t,l)\\)"
+      },
+      y: {
+        title: "Supervision",
+        body: "dynamics and action labels",
+        math: "\\(y_t, a_{t:t+H}\\)"
+      }
+    };
+
+    const allEdges = [
+      { id: "data-e", from: "data", to: "e", label: "image history" },
+      { id: "e-a", from: "e", to: "a", label: "WM latent history" },
+      { id: "a-c", from: "a", to: "c", label: "motion latent" },
+      { id: "a-pi", from: "a", to: "pi", label: "motion latent" },
+      { id: "e-pi", from: "e", to: "pi", label: "current latent + state + task" },
+      { id: "y-c", from: "y", to: "c", label: "L_dyn", loss: true },
+      { id: "y-pi", from: "y", to: "pi", label: "L_act", loss: true }
+    ];
+
+    const stages = {
+      stage1: {
+        title: "Stage 1: 训练动态提取器",
+        pill: "🔥 A + C train",
+        train: ["a", "c"],
+        frozen: ["e"],
+        activeNodes: ["data", "e", "a", "c", "y"],
+        activeEdges: ["data-e", "e-a", "a-c", "y-c"],
+        detail: String.raw`
+          <p><strong>目标：</strong>把 frozen WM latent 中可恢复但纠缠的动态信息蒸馏成 \(m_t\)。</p>
+          <ul>
+            <li>输入：历史图像 \(I_{t-K:t}\)、本体状态 \(q_{t-K:t}\)。</li>
+            <li>\(E\) 冻结，只负责输出 \(z_{t-K:t}\)。</li>
+            <li>\(A\) 输出 dynamic latent \(m_t\)，\(C\) 从 \(m_t\) 预测 \(\hat{y}_t\)。</li>
+            <li>监督：object pose、velocity、future pose、relative pose、time-to-contact 等 \(y_t\)。</li>
+          </ul>
+          <div class="math-block">
+            \[
+              L_{dyn}=\ell(C(A(E(I_{t-K:t}),q_{t-K:t})),y_t)
+            \]
+          </div>
+          <p><strong>反向传播：</strong>\(L_{dyn}\rightarrow C\rightarrow A\)。更新 \(A,C\)，不更新 \(E\)，不涉及 \(\pi\)。</p>
+        `
+      },
+      stage2a: {
+        title: "Stage 2a: 冻结 A 训练动作头",
+        pill: "🔥 π train",
+        train: ["pi"],
+        frozen: ["e", "a"],
+        activeNodes: ["data", "e", "a", "pi", "y"],
+        activeEdges: ["data-e", "e-a", "a-pi", "e-pi", "y-pi"],
+        detail: String.raw`
+          <p><strong>目标：</strong>验证固定的 \(m_t\) 是否能帮助动作预测。</p>
+          <ul>
+            <li>\(E\) 冻结输出 \(z_{t-K:t}\)。</li>
+            <li>\(A\) 冻结输出 \(m_t\)。</li>
+            <li>\(\pi\) 接收 \(z_t,m_t,q_t,l\)，输出动作 chunk。</li>
+            <li>监督：真实动作轨迹 \(a_{t:t+H}\)。</li>
+          </ul>
+          <div class="math-block">
+            \[
+              \hat{a}_{t:t+H}=\pi(z_t,m_t,q_t,l),\quad
+              L_{act}=\ell(\hat{a}_{t:t+H},a_{t:t+H})
+            \]
+          </div>
+          <p><strong>反向传播：</strong>\(L_{act}\rightarrow\pi\)。只更新 \(\pi\)，不更新 \(E,A,C\)。</p>
+        `
+      },
+      stage2b: {
+        title: "Stage 2b: 联合微调 A + π",
+        pill: "🔥 A + π train",
+        train: ["a", "pi"],
+        frozen: ["e", "c"],
+        activeNodes: ["data", "e", "a", "c", "pi", "y"],
+        activeEdges: ["data-e", "e-a", "a-c", "a-pi", "e-pi", "y-c", "y-pi"],
+        detail: String.raw`
+          <p><strong>目标：</strong>让 \(m_t\) 不只是状态估计表征，也更适合控制。</p>
+          <ul>
+            <li>\(A\) 小学习率更新，\(\pi\) 正常更新。</li>
+            <li>\(C\) 冻结，继续作为动态约束读出器。</li>
+            <li>\(E\) 始终冻结。</li>
+            <li>保留 \(L_{dyn}\)，避免 \(A\) 被动作 loss 拉回普通黑箱 latent。</li>
+          </ul>
+          <div class="math-block">
+            \[
+              L_{total}=L_{act}+\lambda L_{dyn}
+            \]
+          </div>
+          <p><strong>反向传播：</strong>\(L_{act}\rightarrow\pi,A\)，\(L_{dyn}\rightarrow C_{\text{frozen}}\rightarrow A\)。只更新 \(A,\pi\)。</p>
+        `
+      },
+      infer: {
+        title: "Inference: 部署数据流",
+        pill: "🧊 all fixed",
+        train: [],
+        frozen: ["e", "a", "pi"],
+        activeNodes: ["data", "e", "a", "pi"],
+        activeEdges: ["data-e", "e-a", "a-pi", "e-pi"],
+        detail: String.raw`
+          <p><strong>目标：</strong>实时输出动作，不使用未来图像、不使用动态标签、不做 future generation。</p>
+          <ul>
+            <li>输入：历史图像 \(I_{t-K:t}\)、本体状态 \(q_t\)、语言 \(l\)。</li>
+            <li>\(E\) 输出 WM latent，\(A\) 输出 \(m_t\)。</li>
+            <li>\(\pi\) 输出动作 chunk \(\hat{a}_{t:t+H}\)。</li>
+            <li>\(C\)、\(y_t\)、动态标签都不参与推理。</li>
+          </ul>
+          <div class="math-block">
+            \[
+              I_{t-K:t}\rightarrow E\rightarrow z_{t-K:t}\rightarrow A\rightarrow m_t,\quad
+              \pi(z_t,m_t,q_t,l)\rightarrow\hat{a}_{t:t+H}
+            \]
+          </div>
+          <p><strong>参数更新：</strong>推理阶段没有反向传播，所有模块参数固定。</p>
+        `
+      }
+    };
+
+    let currentStageKey = "stage1";
+    let graphWidth = 0;
+    let graphHeight = 0;
+
+    function nodeStatus(id, stage) {
+      if (!stage.activeNodes.includes(id)) return { className: "unused", icon: "OFF" };
+      if (stage.train.includes(id)) return { className: "train", icon: "🔥" };
+      if (stage.frozen.includes(id)) return { className: "frozen", icon: "🧊" };
+      return { className: "data", icon: "DATA" };
+    }
+
+    function makePath(points) {
+      if (!points.length) return "";
+      const [first, ...rest] = points;
+      return `M ${first.x} ${first.y} ` + rest.map(p => `L ${p.x} ${p.y}`).join(" ");
+    }
+
+    function edgeMidpoint(points) {
+      const midIndex = Math.floor(points.length / 2);
+      return points[midIndex] || points[0] || { x: 0, y: 0 };
+    }
+
+    function renderGraph(stageKey) {
+      currentStageKey = stageKey;
+      const stage = stages[stageKey];
+      const g = new dagre.graphlib.Graph();
+      g.setGraph({ rankdir: "LR", nodesep: 54, ranksep: 82, marginx: PADDING, marginy: PADDING });
+      g.setDefaultEdgeLabel(() => ({}));
+
+      Object.keys(nodes).forEach(id => g.setNode(id, { width: NODE_W, height: NODE_H }));
+      allEdges.forEach(edge => g.setEdge(edge.from, edge.to, { id: edge.id }));
+      dagre.layout(g);
+
+      graphWidth = Math.ceil(g.graph().width + PADDING);
+      graphHeight = Math.ceil(g.graph().height + PADDING);
+
+      const edgeLayer = document.getElementById("edgeLayer");
+      const nodeLayer = document.getElementById("nodeLayer");
+      const labelLayer = document.getElementById("labelLayer");
+      edgeLayer.setAttribute("width", graphWidth);
+      edgeLayer.setAttribute("height", graphHeight);
+      edgeLayer.setAttribute("viewBox", `0 0 ${graphWidth} ${graphHeight}`);
+      edgeLayer.querySelectorAll("path.edge-path").forEach(path => path.remove());
+      nodeLayer.innerHTML = "";
+      labelLayer.innerHTML = "";
+
+      Object.entries(nodes).forEach(([id, node]) => {
+        const layout = g.node(id);
+        const status = nodeStatus(id, stage);
+        const el = document.createElement("article");
+        el.className = `node ${status.className}`;
+        el.style.left = `${layout.x - NODE_W / 2}px`;
+        el.style.top = `${layout.y - NODE_H / 2}px`;
+        el.setAttribute("aria-label", `${node.title}, ${status.icon}`);
+        el.innerHTML = `
+          <div class="topline">
+            <span class="status">${status.icon}</span>
+            <h3>${node.title}</h3>
+          </div>
+          <p>${node.body}</p>
+          <span class="node-math">${node.math}</span>
+        `;
+        nodeLayer.appendChild(el);
+      });
+
+      allEdges.forEach(edge => {
+        const layout = g.edge(edge.from, edge.to);
+        const active = stage.activeEdges.includes(edge.id);
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        path.setAttribute("class", `edge-path${edge.loss ? " loss" : ""}${active ? "" : " inactive"}`);
+        path.setAttribute("d", makePath(layout.points));
+        edgeLayer.appendChild(path);
+
+        const mid = edgeMidpoint(layout.points);
+        const label = document.createElement("div");
+        label.className = `edge-label${edge.loss ? " loss" : ""}${active ? "" : " inactive"}`;
+        label.style.left = `${mid.x}px`;
+        label.style.top = `${mid.y}px`;
+        label.textContent = edge.label;
+        labelLayer.appendChild(label);
+      });
+
+      document.getElementById("stageHeading").textContent = stage.title;
+      document.getElementById("stagePill").textContent = stage.pill;
+      document.getElementById("stageDetail").innerHTML = stage.detail;
+
+      document.querySelectorAll("button[data-stage]").forEach(button => {
+        button.classList.toggle("active", button.dataset.stage === stageKey);
+      });
+
+      resizeGraph();
+      typesetMath();
+    }
+
+    function resizeGraph() {
+      if (!graphWidth || !graphHeight) return;
+      const viewport = document.getElementById("graphViewport");
+      const scaleEl = document.getElementById("graphScale");
+      const available = viewport.clientWidth - 8;
+      const scale = Math.min(1, available / graphWidth);
+      scaleEl.style.width = `${graphWidth}px`;
+      scaleEl.style.height = `${graphHeight}px`;
+      scaleEl.style.transform = `scale(${scale})`;
+      viewport.style.minHeight = `${Math.max(500, graphHeight * scale + 28)}px`;
+    }
+
+    async function typesetMath() {
+      if (!window.MathJax?.typesetPromise) return;
+      MathJax.typesetClear?.([
+        document.getElementById("nodeLayer"),
+        document.getElementById("stageDetail"),
+        document.querySelector(".idea")
+      ]);
+      await MathJax.typesetPromise([
+        document.getElementById("nodeLayer"),
+        document.getElementById("stageDetail"),
+        document.querySelector(".idea")
+      ]);
+    }
+
+    function boot() {
+      document.querySelectorAll("button[data-stage]").forEach(button => {
+        button.addEventListener("click", () => renderGraph(button.dataset.stage));
+      });
+      window.addEventListener("resize", resizeGraph);
+      renderGraph(currentStageKey);
+    }
+
+    window.addEventListener("load", boot);
+  </script>
+</body>
+</html>

@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cosmos-Predict2 - 完整架构可视化</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-secondary: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --orange: #d2991d;
+    --purple: #a371f7;
+    --red: #f85149;
+    --pink: #db61a2;
+    --teal: #39c5cf;
+    --code-bg: #0d1117;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    line-height: 1.6;
+    padding: 0;
+  }
+  .container { max-width: 1400px; margin: 0 auto; padding: 32px 24px; }
+
+  h1 {
+    font-size: 2em;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, var(--accent), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .subtitle { text-align: center; color: var(--text-secondary); margin-bottom: 40px; font-size: 0.95em; }
+
+  h2 {
+    font-size: 1.35em;
+    margin: 40px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+  }
+  h2 .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  h2 .dot.native { background: var(--accent); }
+  h2 .dot.starvla { background: var(--green); }
+
+  .arch-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+  @media (max-width: 900px) { .arch-grid { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .card h3 {
+    font-size: 1.1em;
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .card.native { border-left: 3px solid var(--accent); }
+  .card.starvla { border-left: 3px solid var(--green); }
+  .badge {
+    font-size: 0.75em; padding: 2px 8px; border-radius: 10px; font-weight: 600;
+  }
+  .badge.native { background: rgba(88,166,255,0.15); color: var(--accent); }
+  .badge.starvla { background: rgba(63,185,80,0.15); color: var(--green); }
+
+  .flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    font-size: 0.88em;
+  }
+  .flow-row {
+    display: flex; align-items: center; gap: 10px; padding: 6px 0;
+  }
+  .flow-label {
+    min-width: 110px; text-align: right; color: var(--text-secondary); font-size: 0.82em; flex-shrink: 0;
+  }
+  .flow-box {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 0.82em;
+    white-space: nowrap;
+  }
+  .flow-arrow {
+    color: var(--text-secondary); font-size: 1.2em; flex-shrink: 0;
+  }
+
+  .big-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .stage {
+    display: flex; align-items: stretch; gap: 0;
+  }
+  .stage-num {
+    width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.82em; flex-shrink: 0; margin-top: 12px;
+  }
+  .stage-num.native { background: var(--accent); color: #fff; }
+  .stage-num.starvla { background: var(--green); color: #fff; }
+  .stage-content {
+    flex: 1; padding: 12px 16px; margin-left: 12px;
+    border-left: 2px solid var(--border);
+  }
+  .stage-content.last { border-left-color: transparent; }
+  .stage-title { font-weight: 600; margin-bottom: 4px; }
+  .stage-desc { font-size: 0.85em; color: var(--text-secondary); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.88em; margin-top: 12px; }
+  th, td {
+    padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border);
+  }
+  th { color: var(--text-secondary); font-weight: 600; font-size: 0.8em; text-transform: uppercase; }
+  td code {
+    background: var(--code-bg); padding: 2px 6px; border-radius: 4px;
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; font-size: 0.85em;
+  }
+  .highlight { color: var(--orange); font-weight: 600; }
+  .highlight-green { color: var(--green); font-weight: 600; }
+
+  .diagram {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    margin: 24px 0;
+    overflow-x: auto;
+  }
+  .diagram svg { display: block; margin: 0 auto; }
+
+  .dit-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 20px 0;
+  }
+  .dit-block h4 { margin-bottom: 12px; color: var(--purple); }
+  .dit-inner {
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .dit-row {
+    display: flex; align-items: center; gap: 10px; font-size: 0.85em;
+  }
+  .dit-label {
+    background: rgba(163,113,247,0.15); color: var(--purple);
+    padding: 2px 8px; border-radius: 4px; font-weight: 600; font-size: 0.8em; min-width: 70px; text-align: center;
+  }
+  .dit-desc { color: var(--text-secondary); flex: 1; }
+
+  .tag {
+    display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.78em; font-weight: 600; margin: 2px 4px;
+  }
+  .tag.frozen { background: rgba(248,81,73,0.15); color: var(--red); }
+  .tag.trainable { background: rgba(63,185,80,0.15); color: var(--green); }
+  .tag.input { background: rgba(88,166,255,0.12); color: var(--accent); }
+  .tag.output { background: rgba(219,97,162,0.12); color: var(--pink); }
+
+  .note {
+    background: rgba(210,153,29,0.08);
+    border: 1px solid rgba(210,153,29,0.25);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 0.88em;
+  }
+  .note strong { color: var(--orange); }
+
+  .section-divider {
+    border: none; border-top: 2px dashed var(--border); margin: 48px 0;
+  }
+
+  .tabs {
+    display: flex; gap: 8px; margin-bottom: 20px;
+  }
+  .tab {
+    padding: 8px 20px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--surface); color: var(--text); cursor: default;
+    font-size: 0.9em; font-weight: 500;
+  }
+  .tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Cosmos-Predict2 完整架构</h1>
+<p class="subtitle">原生 Video2World 扩散生成 vs starVLA 冻结特征提取 · NVIDIA Cosmos-Predict2-2B</p>
+
+<!-- ============================================================ -->
+<h2><span class="dot native"></span> 原生 Cosmos-Predict2 Video2World（视频生成）</h2>
+
+<div class="diagram" style="padding: 40px 20px;">
+<svg viewBox="0 0 1300 620" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:1300px;">
+  <defs>
+    <marker id="arrowNative" markerWidth="8" markerHeight="6" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#58a6ff"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="8" markerHeight="6" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#3fb950"/>
+    </marker>
+    <linearGradient id="gradNative" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#58a6ff" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#a371f7" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="gradStar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#3fb950" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#39c5cf" stop-opacity="0.08"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ====== Row 1: Inputs ====== -->
+  <rect x="30" y="10" width="1300" height="65" rx="10" fill="none" stroke="#30363d" stroke-dasharray="6,3"/>
+  <text x="50" y="32" fill="#8b949e" font-size="12" font-weight="600">输入</text>
+
+  <!-- Video input -->
+  <rect x="50" y="42" width="240" height="28" rx="5" fill="#0d1117" stroke="#30363d"/>
+  <text x="160" y="61" fill="#e6edf3" font-size="11" text-anchor="middle" font-family="monospace">video [B,3,93,704,1280]</text>
+  <text x="160" y="40" fill="#8b949e" font-size="10" text-anchor="middle">真实视频帧 (前N帧)</text>
+
+  <!-- Text input -->
+  <rect x="420" y="42" width="280" height="28" rx="5" fill="#0d1117" stroke="#30363d"/>
+  <text x="560" y="61" fill="#e6edf3" font-size="11" text-anchor="middle" font-family="monospace">"A close-up shot captures..."</text>
+  <text x="560" y="40" fill="#8b949e" font-size="10" text-anchor="middle">文本指令</text>
+
+  <!-- Neg prompt -->
+  <rect x="830" y="42" width="280" height="28" rx="5" fill="#0d1117" stroke="#30363d"/>
+  <text x="970" y="61" fill="#e6edf3" font-size="10" text-anchor="middle" font-family="monospace">"The video captures... blur..."</text>
+  <text x="970" y="40" fill="#8b949e" font-size="10" text-anchor="middle">负向 Prompt (CFG)</text>
+
+  <!-- ====== Row 2: VAE + T5 ====== -->
+  <!-- VAE -->
+  <rect x="50" y="110" width="240" height="50" rx="8" fill="url(#gradNative)" stroke="#58a6ff" stroke-width="1.5"/>
+  <text x="170" y="132" fill="#58a6ff" font-size="12" font-weight="700" text-anchor="middle">VAE Encoder</text>
+  <text x="170" y="150" fill="#8b949e" font-size="10" text-anchor="middle" font-family="monospace">z = encode(video) · normalize</text>
+  <line x1="170" y1="70" x2="170" y2="108" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrowNative)"/>
+
+  <!-- T5 -->
+  <rect x="420" y="110" width="280" height="50" rx="8" fill="url(#gradNative)" stroke="#58a6ff" stroke-width="1.5"/>
+  <text x="560" y="132" fill="#58a6ff" font-size="12" font-weight="700" text-anchor="middle">T5 Encoder</text>
+  <text x="560" y="150" fill="#8b949e" font-size="10" text-anchor="middle" font-family="monospace">prompt_embeds [B, 512, 1024]</text>
+  <line x1="560" y1="70" x2="560" y2="108" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrowNative)"/>
+
+  <!-- T5 neg -->
+  <rect x="830" y="110" width="280" height="50" rx="8" fill="url(#gradNative)" stroke="#58a6ff" stroke-width="1.5"/>
+  <text x="970" y="132" fill="#58a6ff" font-size="12" font-weight="700" text-anchor="middle">T5 Encoder</text>
+  <text x="970" y="150" fill="#8b949e" font-size="10" text-anchor="middle" font-family="monospace">neg_embeds [B, 512, 1024]</text>
+  <line x1="970" y1="70" x2="970" y2="108" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrowNative)"/>
+
+  <!-- ====== Row 3: Split ====== -->
+  <!-- Conditioning latents (clean) -->
+  <rect x="50" y="195" width="200" height="40" rx="6" fill="#0d1117" stroke="#3fb950"/>
+  <text x="150" y="212" fill="#3fb950" font-size="11" font-weight="600" text-anchor="middle">conditioning_latents</text>
+  <text x="150" y="228" fill="#8b949e" font-size="10" text-anchor="middle" font-family="monospace">干净 VAE latent [B,16,T_cond,H,W]</text>
+  <line x1="170" y1="160" x2="150" y2="193" stroke="#3fb950" stroke-width="1.2" marker-end="url(#arrowGreen)"/>
+
+  <!-- Noisy latents -->
+  <rect x="290" y="195" width="200" height="40" rx="6" fill="#0d1117" stroke="#f85149"/>
+  <text x="390" y="212" fill="#f85149" font-size="11" font-weight="600" text-anchor="middle">latents (noise)</text>
+  <text x="390" y="228" fill="#8b949e" font-size="10" text-anchor="middle" font-family="monospace">randn × σ_max(80)</text>
+  <line x1="170" y1="160" x2="330" y2="193" stroke="#f85149" stroke-width="1.2"/>
+
+  <!-- Condition mask -->
+  <rect x="540" y="195" width="230" height="40" rx="6" fill="#0d1117" stroke="#d2991d"/>
+  <text x="655" y="212" fill="#d2991d" font-size="11" font-weight="600" text-anchor="middle">condition_mask</text>
+  <text x="655" y="228" fill="#8b949e" font-size="10" text-anchor="middle" font-family="monospace">前T_cond帧=1.0 | 后段=0.0</text>
+
+  <!-- ====== Row 4: Merge ====== -->
+  <rect x="290" y="270" width="550" height="36" rx="8" fill="rgba(88,166,255,0.06)" stroke="#58a6ff" stroke-width="1.2" stroke-dasharray="4,2"/>
+  <text x="565" y="293" fill="#58a6ff" font-size="11" font-weight="600" text-anchor="middle" font-family="monospace">cond_latent = indicator×clean_latent + (1-indicator)×noisy_latent (每步更新)</text>
+  <line x1="390" y1="235" x2="470" y2="268" stroke="#58a6ff" stroke-width="1.2" marker-end="url(#arrowNative)"/>
+  <line x1="655" y1="235" x2="600" y2="268" stroke="#58a6ff" stroke-width="1.2" marker-end="url(#arrowNative)"/>
+
+  <!-- ====== Row 5: DiT Denoising Loop ====== -->
+  <rect x="200" y="340" width="720" height="115" rx="12" fill="rgba(163,113,247,0.06)" stroke="#a371f7" stroke-width="2"/>
+  <text x="560" y="362" fill="#a371f7" font-size="13" font-weight="700" text-anchor="middle">DiT Denoising Loop (×35 steps)</text>
+  <text x="560" y="378" fill="#8b949e" font-size="10" text-anchor="middle" font-family="monospace">for t in (σ=1.0 → 0.002):</text>
+
+  <!-- v-pred -->
+  <rect x="230" y="388" width="210" height="28" rx="5" fill="#0d1117" stroke="#a371f7"/>
+  <text x="335" y="406" fill="#e6edf3" font-size="10" text-anchor="middle" font-family="monospace">v_pred = DiT(latent, t, text_emb, mask)</text>
+  <!-- CFG -->
+  <rect x="460" y="388" width="210" height="28" rx="5" fill="#0d1117" stroke="#a371f7"/>
+  <text x="565" y="406" fill="#e6edf3" font-size="10" text-anchor="middle" font-family="monospace">v = v_cond + 7.0×(v_cond−v_uncond)</text>
+  <!-- step -->
+  <rect x="690" y="388" width="200" height="28" rx="5" fill="#0d1117" stroke="#a371f7"/>
+  <text x="790" y="406" fill="#e6edf3" font-size="10" text-anchor="middle" font-family="monospace">ε = (z − v)/σ → scheduler.step()</text>
+
+  <text x="560" y="442" fill="#8b949e" font-size="10" text-anchor="middle">每步执行 2× DiT forward (cond + uncond) → 共 70 次 forward</text>
+
+  <line x1="565" y1="306" x2="565" y2="338" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrowNative)"/>
+
+  <!-- ====== Row 6: VAE Decode ====== -->
+  <rect x="380" y="490" width="360" height="50" rx="8" fill="url(#gradNative)" stroke="#58a6ff" stroke-width="1.5"/>
+  <text x="560" y="512" fill="#58a6ff" font-size="12" font-weight="700" text-anchor="middle">VAE Decoder</text>
+  <text x="560" y="530" fill="#8b949e" font-size="10" text-anchor="middle" font-family="monospace">denormalize → decode → 生成视频 [B,3,93,704,1280]</text>
+  <line x1="560" y1="455" x2="560" y2="488" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrowNative)"/>
+
+  <!-- ====== Right side: Frozen/Trainable Legend ====== -->
+  <rect x="1020" y="180" width="220" height="160" rx="8" fill="#0d1117" stroke="#30363d"/>
+  <text x="1130" y="200" fill="#8b949e" font-size="10" font-weight="600" text-anchor="middle">原生模式：全模块训练</text>
+  <text x="1040" y="222" fill="#3fb950" font-size="10">● VAE — 训练</text>
+  <text x="1040" y="242" fill="#3fb950" font-size="10">● T5 — 训练</text>
+  <text x="1040" y="262" fill="#3fb950" font-size="10">● DiT — 训练</text>
+  <text x="1040" y="282" fill="#f85149" font-size="10">● Loss = flow-matching</text>
+  <text x="1040" y="302" fill="#f85149" font-size="10">● 生成目标: 未来帧视频</text>
+  <text x="1040" y="322" fill="#d2991d" font-size="10">● CFG guidance_scale=7.0</text>
+</svg>
+</div>
+
+<!-- ====== DiT Block Detail ====== -->
+<h2><span class="dot" style="background:var(--purple)"></span> DiT Transformer Block 内部 (每层)</h2>
+<div class="dit-block">
+  <div class="dit-inner">
+    <div class="dit-row">
+      <span class="dit-label">输入</span>
+      <span class="dit-desc" style="font-family:monospace">hidden_states [B, THW, 2048]  &nbsp;← PatchEmbed(latent concat mask) + learnable_pos_embed</span>
+    </div>
+    <div class="dit-row">
+      <span class="dit-label">Step 1</span>
+      <span class="dit-desc"><strong>Self-Attention</strong>: Q=KV=latent tokens, 带 3D RoPE (T/H/W 三轴旋转编码), GQA, RMS-Norm QK</span>
+    </div>
+    <div class="dit-row">
+      <span class="dit-label">Step 2</span>
+      <span class="dit-desc" style="background:rgba(163,113,247,0.06);padding:2px 6px;border-radius:4px"><strong>Cross-Attention ★ 融合点</strong>: Q=latent tokens, KV=T5 text embeddings — 文本信息注入视觉特征</span>
+    </div>
+    <div class="dit-row">
+      <span class="dit-label">Step 3</span>
+      <span class="dit-desc"><strong>Feed-Forward</strong>: Linear(2048→8192), GELU, Dropout, Linear(8192→2048)</span>
+    </div>
+    <div class="dit-row">
+      <span class="dit-label">调制</span>
+      <span class="dit-desc"><strong>AdaNormZero</strong>: 每步前后由 timestep embedding 生成 (shift, scale, gate), FiLM 方式调制 latent + gate 控制残差</span>
+    </div>
+    <div class="dit-row">
+      <span class="dit-label">输出</span>
+      <span class="dit-desc" style="font-family:monospace">hidden_states [B, THW, 2048] → 送入下一层 (共 28 层)</span>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<h2><span class="dot starvla"></span> starVLA CosmoPredict2GR00T（动作预测 - 冻结特征提取）</h2>
+
+<div class="diagram" style="padding:40px 20px;">
+<svg viewBox="0 0 1300 520" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:1300px;">
+  <!-- ====== Inputs ====== -->
+  <rect x="30" y="10" width="1300" height="55" rx="10" fill="none" stroke="#30363d" stroke-dasharray="6,3"/>
+  <text x="50" y="32" fill="#8b949e" font-size="12" font-weight="600">输入</text>
+
+  <rect x="80" y="38" width="280" height="22" rx="5" fill="#0d1117" stroke="#30363d"/>
+  <text x="220" y="53" fill="#e6edf3" font-size="10" text-anchor="middle" font-family="monospace">concat images [t-4..t] 224×672 ×5帧</text>
+  <rect x="440" y="38" width="280" height="22" rx="5" fill="#0d1117" stroke="#30363d"/>
+  <text x="580" y="53" fill="#e6edf3" font-size="10" text-anchor="middle" font-family="monospace">"Place the stapler right of the cube"</text>
+  <rect x="800" y="38" width="220" height="22" rx="5" fill="#0d1117" stroke="#30363d"/>
+  <text x="910" y="53" fill="#e6edf3" font-size="10" text-anchor="middle" font-family="monospace">state [B,1,14] joints+gripper</text>
+
+  <!-- ====== Frozen VAE + T5 ====== -->
+  <rect x="80" y="100" width="280" height="50" rx="8" fill="url(#gradStar)" stroke="#3fb950" stroke-width="1.5"/>
+  <text x="220" y="122" fill="#3fb950" font-size="12" font-weight="700" text-anchor="middle">VAE Encoder</text>
+  <text x="220" y="140" fill="#8b949e" font-size="10" text-anchor="middle" font-family="monospace">→ latent [B,16,T_lat,28,84] · normalize</text>
+  <line x1="220" y1="60" x2="220" y2="98" stroke="#3fb950" stroke-width="1.5" marker-end="url(#arrowGreen)"/>
+
+  <rect x="440" y="100" width="280" height="50" rx="8" fill="url(#gradStar)" stroke="#3fb950" stroke-width="1.5"/>
+  <text x="580" y="122" fill="#3fb950" font-size="12" font-weight="700" text-anchor="middle">T5 Encoder</text>
+  <text x="580" y="140" fill="#8b949e" font-size="10" text-anchor="middle" font-family="monospace">→ text_embeds [B, 512, 1024]</text>
+  <line x1="580" y1="60" x2="580" y2="98" stroke="#3fb950" stroke-width="1.5" marker-end="url(#arrowGreen)"/>
+
+  <text x="230" y="95" fill="#f85149" font-size="9" font-weight="600">FROZEN</text>
+  <text x="590" y="95" fill="#f85149" font-size="9" font-weight="600">FROZEN</text>
+
+  <!-- ====== DiT Clean Forward ====== -->
+  <rect x="250" y="190" width="620" height="70" rx="12" fill="rgba(163,113,247,0.06)" stroke="#a371f7" stroke-width="2"/>
+  <text x="560" y="212" fill="#a371f7" font-size="13" font-weight="700" text-anchor="middle">Cosmos DiT Transformer (28 layers) — timestep=0 干净前传</text>
+  <text x="560" y="232" fill="#8b949e" font-size="10" text-anchor="middle" font-family="monospace">condition_mask=全1, 单次 forward, Self-Attn + Cross-Attn(text) → extract hidden_states[-1]</text>
+  <text x="560" y="250" fill="#f85149" font-size="9" text-anchor="middle">FROZEN (只提取特征)</text>
+
+  <line x1="220" y1="150" x2="460" y2="188" stroke="#a371f7" stroke-width="1.2" marker-end="url(#arrowNative)"/>
+  <line x1="580" y1="150" x2="580" y2="188" stroke="#a371f7" stroke-width="1.2" marker-end="url(#arrowNative)"/>
+
+  <!-- ====== hidden_states ====== -->
+  <rect x="330" y="290" width="440" height="30" rx="6" fill="#0d1117" stroke="#db61a2"/>
+  <text x="550" y="310" fill="#db61a2" font-size="11" text-anchor="middle" font-family="monospace">hidden_states[-1] [B, 4704, 2048]</text>
+  <line x1="560" y1="260" x2="560" y2="288" stroke="#db61a2" stroke-width="1.5" marker-end="url(#arrowNative)"/>
+
+  <!-- ====== WMActionResampler ====== -->
+  <rect x="330" y="350" width="440" height="45" rx="8" fill="rgba(210,153,29,0.08)" stroke="#d2991d" stroke-width="1.5"/>
+  <text x="550" y="370" fill="#d2991d" font-size="12" font-weight="700" text-anchor="middle">WMActionResampler (7.92M)</text>
+  <text x="550" y="386" fill="#8b949e" font-size="10" text-anchor="middle" font-family="monospace">64 query tokens × cross-attn → [B, 64, 512]</text>
+  <line x1="550" y1="320" x2="550" y2="348" stroke="#d2991d" stroke-width="1.5" marker-end="url(#arrowNative)"/>
+  <text x="780" y="377" fill="#3fb950" font-size="9" font-weight="600">TRAINABLE</text>
+
+  <!-- ====== Action Head ====== -->
+  <rect x="330" y="428" width="440" height="45" rx="8" fill="rgba(57,197,207,0.08)" stroke="#39c5cf" stroke-width="1.5"/>
+  <text x="550" y="448" fill="#39c5cf" font-size="12" font-weight="700" text-anchor="middle">FlowmatchingActionHead</text>
+  <text x="550" y="464" fill="#8b949e" font-size="10" text-anchor="middle" font-family="monospace">flow-matching DiT → predicted_actions [B, 8, 7]</text>
+  <line x1="550" y1="395" x2="550" y2="426" stroke="#39c5cf" stroke-width="1.5" marker-end="url(#arrowNative)"/>
+  <text x="780" y="455" fill="#3fb950" font-size="9" font-weight="600">TRAINABLE</text>
+
+  <!-- ====== Right: Legend ====== -->
+  <rect x="900" y="190" width="280" height="180" rx="8" fill="#0d1117" stroke="#30363d"/>
+  <text x="1040" y="212" fill="#8b949e" font-size="10" font-weight="600" text-anchor="middle">starVLA 模式</text>
+  <text x="920" y="234" fill="#f85149" font-size="10">● VAE / T5 / DiT — 冻结</text>
+  <text x="920" y="254" fill="#3fb950" font-size="10">● WMActionResampler — 训练 (1e-4)</text>
+  <text x="920" y="274" fill="#3fb950" font-size="10">● Action Head — 训练 (1e-4)</text>
+  <text x="920" y="294" fill="#d2991d" font-size="10">● timestep = 0 (干净前传)</text>
+  <text x="920" y="314" fill="#d2991d" font-size="10">● condition_mask = 全1</text>
+  <text x="920" y="334" fill="#d2991d" font-size="10">● 无需 CFG, 单次 forward</text>
+  <text x="920" y="354" fill="#39c5cf" font-size="10">● Loss = MSE(pred_v, target_v)</text>
+</svg>
+</div>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<h2><span class="dot native"></span> 完整对比</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>环节</th>
+      <th style="color:var(--accent)">原生 Cosmos Video2World</th>
+      <th style="color:var(--green)">starVLA Action Prediction</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>输入图像</strong></td><td>真实视频前N帧 [B,3,N,704,1280]</td><td>多视角拼接 [B,5,3,224,672] (head+lw+rw × [t-4..t])</td></tr>
+    <tr><td><strong>输入文本</strong></td><td>prompt + neg_prompt (CFG)</td><td>task instruction (仅 prompt)</td></tr>
+    <tr><td><strong>VAE 输出</strong></td><td>latent [B,16,T_lat,88,160]</td><td>latent [B,16,T_lat,28,84] <span style="color:var(--text-secondary);font-size:0.85em">(较小分辨率)</span></td></tr>
+    <tr><td><strong>latent 初始</strong></td><td><span class="highlight">随机噪声 N(0, 80²)</span></td><td><span class="highlight-green">干净 VAE latent</span></td></tr>
+    <tr><td><strong>timestep</strong></td><td><span class="highlight">σ=1.0→0.002 (35步迭代)</span></td><td><span class="highlight-green">固定 t=0</span></td></tr>
+    <tr><td><strong>condition_mask</strong></td><td>前N帧=1 (干净), 后半=0 (噪声)</td><td><span class="highlight-green">全1 (所有帧都是条件)</span></td></tr>
+    <tr><td><strong>CFG</strong></td><td><span class="highlight">guidance_scale=7.0</span></td><td><span class="highlight-green">无</span></td></tr>
+    <tr><td><strong>DiT forward 次数</strong></td><td>35 × 2 = <span class="highlight">70次</span></td><td><span class="highlight-green">1次</span></td></tr>
+    <tr><td><strong>DiT 任务</strong></td><td>预测速度 v, 迭代去噪</td><td>提取 <code>hidden_states[-1]</code></td></tr>
+    <tr><td><strong>AdaNorm 行为</strong></td><td>t≠0 时有效调制</td><td>t=0→shift/scale/gate 近似恒等</td></tr>
+    <tr><td><strong>Cross-Attention</strong></td><td>保留 (文本注入视觉)</td><td><span class="highlight-green">保留 (文本注入视觉)</span></td></tr>
+    <tr><td><strong>Self-Attention + RoPE</strong></td><td>保留 (时空建模)</td><td><span class="highlight-green">保留 (时空建模)</span></td></tr>
+    <tr><td><strong>输出</strong></td><td>VAE decode → 93帧视频</td><td>hidden_states → Resampler → Action Head → <code>actions [B,8,7]</code></td></tr>
+    <tr><td><strong>Loss</strong></td><td>flow-matching noise loss</td><td><span class="highlight-green">MSE(pred_velocity, target_velocity)</span></td></tr>
+    <tr><td><strong>VAE/T5/DiT</strong></td><td>全部训练</td><td><span class="highlight-green">全部冻结</span></td></tr>
+    <tr><td><strong>额外可训练模块</strong></td><td>无</td><td><span class="highlight-green">WMActionResampler (7.92M) + Action Head</span></td></tr>
+  </tbody>
+</table>
+
+<!-- ============================================================ -->
+<h2><span class="dot" style="background:var(--pink)"></span> 关键洞察</h2>
+
+<div class="note">
+  <strong>为什么 t=0 还能工作？</strong><br>
+  DiT 在 timestep=0 时退化为一个 <strong>带 text-conditioning 的时空 self-attention 编码器</strong>。
+  Self-attention 仍然建模 latent patch 之间的时空依赖（物体运动、空间关系），3D RoPE 位置编码完全保留。
+  Cross-attention 仍然让 latent (Q) 查询 text embeddings (K,V)，语言信息照样注入。
+  预训练阶段学到的物理直觉、运动先验被完整保留在权重里，一个 clean pass 就能提取。
+</div>
+
+<div class="note">
+  <strong>starVLA 本质是什么？</strong><br>
+  把一个预训练的 <strong>video diffusion model 当作冻结的时空视觉 backbone</strong> —
+  和把 CLIP/DINO 作为 vision encoder 的思路一样，不同的是 Cosmos 的 DiT 内在编码了物理动态、
+  3D 时空关系、以及语言 grounding。不需要扩散采样，单次 forward 就能榨出 rich spatiotemporal features。
+</div>
+
+<div class="note">
+  <strong>WMActionResampler 的角色</strong><br>
+  DiT 输出 ~4700 个 token × 2048 维，直接喂给 action head 太重。
+  Resampler (7.92M, Perceiver/Q-Former 风格) 用 64 个 learnable queries 通过 cross-attention
+  将长序列压缩为 64×512 的 action condition tokens，再交给 FlowmatchingActionHead 做 flow-matching 动作预测。
+</div>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<h2><span class="dot" style="background:var(--teal)"></span> 数据流总览</h2>
+
+<div class="diagram" style="padding:28px 20px;">
+<svg viewBox="0 0 1300 280" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:1300px;">
+  <!-- VAE branch -->
+  <rect x="30" y="20" width="240" height="100" rx="10" fill="rgba(63,185,80,0.05)" stroke="#3fb950" stroke-width="1.5"/>
+  <text x="150" y="44" fill="#3fb950" font-size="12" font-weight="600" text-anchor="middle">VAE Encoder</text>
+  <text x="150" y="64" fill="#8b949e" font-size="9" text-anchor="middle" font-family="monospace">3路concat × 5历史帧</text>
+  <text x="150" y="80" fill="#8b949e" font-size="9" text-anchor="middle" font-family="monospace">[B,5,3,224,672]</text>
+  <text x="150" y="108" fill="#f85149" font-size="9" font-weight="600" text-anchor="middle">FROZEN  →</text>
+
+  <!-- T5 branch -->
+  <rect x="30" y="150" width="240" height="100" rx="10" fill="rgba(63,185,80,0.05)" stroke="#3fb950" stroke-width="1.5"/>
+  <text x="150" y="174" fill="#3fb950" font-size="12" font-weight="600" text-anchor="middle">T5 Encoder</text>
+  <text x="150" y="194" fill="#8b949e" font-size="9" text-anchor="middle" font-family="monospace">task instruction</text>
+  <text x="150" y="210" fill="#8b949e" font-size="9" text-anchor="middle" font-family="monospace">[B,512,1024]</text>
+  <text x="150" y="238" fill="#f85149" font-size="9" font-weight="600" text-anchor="middle">FROZEN  →</text>
+
+  <!-- DiT -->
+  <rect x="320" y="20" width="320" height="230" rx="12" fill="rgba(163,113,247,0.05)" stroke="#a371f7" stroke-width="2"/>
+  <text x="480" y="50" fill="#a371f7" font-size="14" font-weight="700" text-anchor="middle">Cosmos DiT</text>
+  <text x="480" y="68" fill="#a371f7" font-size="10" text-anchor="middle">28 layers × 2048 dim</text>
+
+  <rect x="345" y="85" width="270" height="55" rx="6" fill="#0d1117" stroke="#30363d"/>
+  <text x="480" y="103" fill="#e6edf3" font-size="9" text-anchor="middle">Self-Attention + RoPE(3D)</text>
+  <text x="480" y="118" fill="#e6edf3" font-size="9" text-anchor="middle">Cross-Attention(Q=latent, KV=text)</text>
+  <text x="480" y="133" fill="#e6edf3" font-size="9" text-anchor="middle">AdaNormZero(timestep=0) + FFN</text>
+
+  <text x="480" y="163" fill="#f85149" font-size="9" font-weight="600" text-anchor="middle">FROZEN · t=0 · 单次forward</text>
+  <text x="480" y="178" fill="#8b949e" font-size="9" text-anchor="middle" font-family="monospace">hidden_states[-1]</text>
+  <text x="480" y="200" fill="#db61a2" font-size="10" font-weight="600" text-anchor="middle" font-family="monospace">[B, 4704, 2048]</text>
+  <rect x="345" y="212" width="270" height="28" rx="4" fill="#f85149" fill-opacity="0.1"/>
+  <text x="480" y="231" fill="#f85149" font-size="9" text-anchor="middle">freeze_module_list='backbone'</text>
+
+  <!-- Resampler -->
+  <rect x="700" y="60" width="240" height="150" rx="10" fill="rgba(210,153,29,0.05)" stroke="#d2991d" stroke-width="1.5"/>
+  <text x="820" y="84" fill="#d2991d" font-size="12" font-weight="700" text-anchor="middle">WMActionResampler</text>
+  <text x="820" y="102" fill="#3fb950" font-size="9" text-anchor="middle" font-family="monospace">7.92M params · lr=1e-4</text>
+  <text x="820" y="130" fill="#e6edf3" font-size="9" text-anchor="middle">64 learnable queries</text>
+  <text x="820" y="148" fill="#e6edf3" font-size="9" text-anchor="middle">2× cross-attn blocks</text>
+  <text x="820" y="166" fill="#e6edf3" font-size="9" text-anchor="middle">input_proj(2048→512)</text>
+  <text x="820" y="190" fill="#db61a2" font-size="9" text-anchor="middle" font-family="monospace">→ [B, 64, 512]</text>
+
+  <!-- Action Head -->
+  <rect x="1000" y="60" width="250" height="150" rx="10" fill="rgba(57,197,207,0.05)" stroke="#39c5cf" stroke-width="1.5"/>
+  <text x="1125" y="84" fill="#39c5cf" font-size="12" font-weight="700" text-anchor="middle">FlowmatchingActionHead</text>
+  <text x="1125" y="102" fill="#3fb950" font-size="9" text-anchor="middle" font-family="monospace">lr=1e-4</text>
+  <text x="1125" y="130" fill="#e6edf3" font-size="9" text-anchor="middle">state encoder (7-dim)</text>
+  <text x="1125" y="148" fill="#e6edf3" font-size="9" text-anchor="middle">flow-matching DiT diffusion</text>
+  <text x="1125" y="166" fill="#e6edf3" font-size="9" text-anchor="middle">cross_attn_dim = 512</text>
+  <text x="1125" y="190" fill="#db61a2" font-size="9" text-anchor="middle" font-family="monospace">→ [B, 8, 7] actions</text>
+
+  <!-- Arrows -->
+  <line x1="270" y1="70" x2="318" y2="90" stroke="#8b949e" stroke-width="1.2" marker-end="url(#arrowNative)"/>
+  <line x1="270" y1="200" x2="318" y2="180" stroke="#8b949e" stroke-width="1.2" marker-end="url(#arrowNative)"/>
+  <line x1="640" y1="135" x2="698" y2="135" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arrowNative)"/>
+  <line x1="940" y1="135" x2="998" y2="135" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arrowNative)"/>
+
+  <!-- State input -->
+  <rect x="1125" y="18" width="140" height="22" rx="5" fill="#0d1117" stroke="#30363d"/>
+  <text x="1195" y="33" fill="#e6edf3" font-size="9" text-anchor="middle" font-family="monospace">state [B,1,14]</text>
+  <line x1="1195" y1="40" x2="1195" y2="58" stroke="#8b949e" stroke-width="1" marker-end="url(#arrowNative)"/>
+
+  <!-- Loss -->
+  <rect x="1100" y="240" width="150" height="24" rx="5" fill="rgba(248,81,73,0.1)" stroke="#f85149" stroke-width="1"/>
+  <text x="1175" y="256" fill="#f85149" font-size="10" font-weight="600" text-anchor="middle" font-family="monospace">Loss = MSE(v_pred, v_target)</text>
+</svg>
+</div>
+
+</div>
+</body>
+</html>

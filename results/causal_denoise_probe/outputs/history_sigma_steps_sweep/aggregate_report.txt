@@ -1,0 +1,12 @@
+output_root: /data/repos/cosmos_causal_probe/outputs/history_sigma_steps_sweep
+runs: 4
+A1 rows: 240
+A0 rows: 40
+
+Best A1 by history:
+  cond_frames=1 cond_lat=1 sigma=0.8 K=20 x_final=0.2326 gain=-0.5954 pred=0.2359 hidden=0.7043
+  cond_frames=5 cond_lat=2 sigma=2.0 K=1 x_final=0.1943 gain=-0.6950 pred=0.1952 hidden=0.4593
+  cond_frames=9 cond_lat=3 sigma=2.0 K=1 x_final=0.1103 gain=-0.8283 pred=0.1106 hidden=0.4993
+  cond_frames=13 cond_lat=4 sigma=1.0 K=1 x_final=0.0722 gain=-0.8925 pred=0.0726 hidden=0.5837
+
+Best overall: cond_frames=1 sigma=0.8 K=20 gain=-0.5954 x_final=0.2326

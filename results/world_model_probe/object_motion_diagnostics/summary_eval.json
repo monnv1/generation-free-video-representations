@@ -1,0 +1,93 @@
+{
+  "checkpoint": "/data/checkpoints/world_model_probe/cosmos_dom_chunk0_fulltok_s30_delta_strongreadout_e125_probe/best.pt",
+  "split": "eval",
+  "num_samples": 1326,
+  "target_mode": "delta",
+  "horizons": [
+    1,
+    5,
+    10,
+    20
+  ],
+  "arrays": {
+    "valid": [
+      1326,
+      4
+    ],
+    "pred_delta_obj_pos": [
+      1326,
+      4,
+      3
+    ],
+    "gt_delta_obj_pos": [
+      1326,
+      4,
+      3
+    ],
+    "pred_abs_obj_pos": [
+      1326,
+      4,
+      3
+    ],
+    "gt_abs_obj_pos": [
+      1326,
+      4,
+      3
+    ],
+    "current_obj_pos": [
+      1326,
+      3
+    ],
+    "pred_delta_obj_vel": [
+      1326,
+      4,
+      3
+    ],
+    "gt_delta_obj_vel": [
+      1326,
+      4,
+      3
+    ],
+    "pred_abs_obj_vel": [
+      1326,
+      4,
+      3
+    ],
+    "gt_abs_obj_vel": [
+      1326,
+      4,
+      3
+    ],
+    "current_obj_vel": [
+      1326,
+      3
+    ],
+    "pred_delta_arm_pos": [
+      1326,
+      4,
+      3
+    ],
+    "gt_delta_arm_pos": [
+      1326,
+      4,
+      3
+    ],
+    "pred_abs_arm_pos": [
+      1326,
+      4,
+      3
+    ],
+    "gt_abs_arm_pos": [
+      1326,
+      4,
+      3
+    ],
+    "current_arm_pos": [
+      1326,
+      3
+    ],
+    "horizons": [
+      4
+    ]
+  }
+}

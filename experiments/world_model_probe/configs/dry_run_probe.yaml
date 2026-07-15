@@ -1,0 +1,82 @@
+project:
+  run_name: dry_run_dom_chunk0_probe
+  seed: 42
+
+paths:
+  latent_root: /data/datasets/DOM_latents/world_model_probe/{backbone}
+  checkpoint_dir: /data/checkpoints/world_model_probe/{run_name}
+
+data:
+  adapter: world_model_probe.data.dom:iter_probe_samples
+  dom_root: /data/datasets/DOM
+  chunk_id: 0
+  video_key: observation.images.opst_cam
+  image_size: [128, 128]
+  input_frames: 4
+  frame_stride: 1
+  sample_stride: 25
+  max_samples_per_episode: 2
+  splits:
+    train: [0, 8]
+    eval: [800, 804]
+
+targets:
+  horizons: [1, 5, 10]
+  obj_pos_indices: [0, 1, 2]
+  obj_vel_indices: [6, 7, 8]
+  arm_pos_indices: [0, 1, 2]
+
+backbone:
+  name: dry_run
+  adapter: world_model_probe.backbones.dry_run:DryRunBackboneAdapter
+  token_dim: 128
+  token_count: 64
+  cache_dtype: float16
+  max_tokens: 64
+  seed: 17
+  prompt_template: "{task}"
+
+probe:
+  backbone_dim: auto
+  query_dim: 128
+  num_queries: 8
+  num_obj_queries: 4
+  num_heads: 4
+  head_hidden_dim: 128
+  dropout: 0.0
+
+training:
+  device: cuda
+  epochs: 2
+  batch_size: 8
+  eval_batch_size: 8
+  num_workers: 0
+  lr: 1.0e-3
+  weight_decay: 0.0
+  max_grad_norm: 1.0
+  amp: true
+  loss_type: l2
+  loss_weights:
+    obj_pos: 1.0
+    obj_vel: 1.0
+    arm_pos: 1.0
+  log_every: 1
+  eval_every: 10
+
+logging:
+  wandb:
+    enabled: false
+    entity: weisb25-tsinghua-university
+    project: world_model_probe_DOMINO
+    name: "{run_name}"
+    group: "{backbone}"
+    mode: disabled
+    tags: ["dom", "world_model_probe", "{backbone}", "dry_run"]
+    resume: allow
+
+evaluation:
+  device: cuda
+  batch_size: 8
+  num_workers: 0
+  compute_baselines: true
+  relative_error_eps: 1.0e-6

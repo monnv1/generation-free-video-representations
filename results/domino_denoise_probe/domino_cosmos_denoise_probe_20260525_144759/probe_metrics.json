@@ -1,0 +1,1568 @@
+{
+  "future|raw_no_denoise|layer=6": {
+    "target": "future",
+    "source": "raw_no_denoise",
+    "layer": 6,
+    "val": {
+      "loss": 0.768377259061053,
+      "xyz_rmse_m": 0.12847229327772047,
+      "uv_mae_norm": 0.11637610488838249,
+      "depth_mae_m": 0.06367048498738062,
+      "velocity_mae_m_per_frame": 0.03845086342075488,
+      "contact_acc": 0.8293706445427208,
+      "success_acc": 0.9426573506602041,
+      "time_to_contact_acc": 0.7167832230354523,
+      "time_to_contact_mae_bucket": 0.940559445561229
+    },
+    "test": {
+      "loss": 0.6991448283195496,
+      "xyz_rmse_m": 0.11371709605058035,
+      "uv_mae_norm": 0.09565067688624064,
+      "depth_mae_m": 0.06857814490795136,
+      "velocity_mae_m_per_frame": 0.03648597002029419,
+      "contact_acc": 0.8270833611488342,
+      "success_acc": 0.9433333357175191,
+      "time_to_contact_acc": 0.731250007947286,
+      "time_to_contact_mae_bucket": 0.8479166825612386
+    },
+    "best_epoch": 10,
+    "best_val_loss": 0.768377259061053,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/future__raw_no_denoise__layer_6.pt",
+    "feature_mean_norm": 190.53256225585938,
+    "feature_std_mean": 0.8966773748397827
+  },
+  "current|raw_no_denoise|layer=6": {
+    "target": "current",
+    "source": "raw_no_denoise",
+    "layer": 6,
+    "val": {
+      "loss": 0.2600983589679211,
+      "xyz_rmse_m": 0.11172455288730301,
+      "uv_mae_norm": 0.11878911702782957,
+      "depth_mae_m": 0.05473327144355207,
+      "contact_acc": 0.8269230827584967,
+      "success_acc": 0.9947552447552448
+    },
+    "test": {
+      "loss": 0.2535019278526306,
+      "xyz_rmse_m": 0.1129774550596873,
+      "uv_mae_norm": 0.09455572267373404,
+      "depth_mae_m": 0.05586908708016078,
+      "contact_acc": 0.8416666666666667,
+      "success_acc": 0.9916666666666667
+    },
+    "best_epoch": 10,
+    "best_val_loss": 0.2600983589679211,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/current__raw_no_denoise__layer_6.pt",
+    "feature_mean_norm": 190.53256225585938,
+    "feature_std_mean": 0.8966773748397827
+  },
+  "future|raw_no_denoise|layer=14": {
+    "target": "future",
+    "source": "raw_no_denoise",
+    "layer": 14,
+    "val": {
+      "loss": 0.7487462575619037,
+      "xyz_rmse_m": 0.12359201480875483,
+      "uv_mae_norm": 0.11045221557150355,
+      "depth_mae_m": 0.07349033124901198,
+      "velocity_mae_m_per_frame": 0.03579760004173626,
+      "contact_acc": 0.8129370675220357,
+      "success_acc": 0.9405594672356452,
+      "time_to_contact_acc": 0.7115384632057243,
+      "time_to_contact_mae_bucket": 0.9283216862411766
+    },
+    "test": {
+      "loss": 0.7465729713439941,
+      "xyz_rmse_m": 0.11762043535709381,
+      "uv_mae_norm": 0.10905674199263254,
+      "depth_mae_m": 0.0845857580502828,
+      "velocity_mae_m_per_frame": 0.0389947513739268,
+      "contact_acc": 0.8350000182787577,
+      "success_acc": 0.9454166809717814,
+      "time_to_contact_acc": 0.7333333412806193,
+      "time_to_contact_mae_bucket": 0.8520833412806194
+    },
+    "best_epoch": 13,
+    "best_val_loss": 0.7487462575619037,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/future__raw_no_denoise__layer_14.pt",
+    "feature_mean_norm": 254.82191467285156,
+    "feature_std_mean": 2.2851576805114746
+  },
+  "current|raw_no_denoise|layer=14": {
+    "target": "current",
+    "source": "raw_no_denoise",
+    "layer": 14,
+    "val": {
+      "loss": 0.25949576851371287,
+      "xyz_rmse_m": 0.10800172888732457,
+      "uv_mae_norm": 0.13141446967016568,
+      "depth_mae_m": 0.05329558865486325,
+      "contact_acc": 0.8059440634467385,
+      "success_acc": 0.9947552447552448
+    },
+    "test": {
+      "loss": 0.260237584511439,
+      "xyz_rmse_m": 0.11779344578584035,
+      "uv_mae_norm": 0.10206170578797659,
+      "depth_mae_m": 0.05832027023037275,
+      "contact_acc": 0.8229166666666666,
+      "success_acc": 0.9916666666666667
+    },
+    "best_epoch": 13,
+    "best_val_loss": 0.25949576851371287,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/current__raw_no_denoise__layer_14.pt",
+    "feature_mean_norm": 254.82191467285156,
+    "feature_std_mean": 2.2851576805114746
+  },
+  "future|raw_no_denoise|layer=27": {
+    "target": "future",
+    "source": "raw_no_denoise",
+    "layer": 27,
+    "val": {
+      "loss": 0.7825776892942149,
+      "xyz_rmse_m": 0.11663893886379428,
+      "uv_mae_norm": 0.11546094569709751,
+      "depth_mae_m": 0.060378433394056935,
+      "velocity_mae_m_per_frame": 0.036260181008935806,
+      "contact_acc": 0.8076923289499083,
+      "success_acc": 0.9419580606313852,
+      "time_to_contact_acc": 0.6835664369009592,
+      "time_to_contact_mae_bucket": 1.1013986122358095
+    },
+    "test": {
+      "loss": 0.7066572586695353,
+      "xyz_rmse_m": 0.12277478973070781,
+      "uv_mae_norm": 0.09683996836344401,
+      "depth_mae_m": 0.06045234402020772,
+      "velocity_mae_m_per_frame": 0.03702092468738556,
+      "contact_acc": 0.8362500111262003,
+      "success_acc": 0.9412500143051148,
+      "time_to_contact_acc": 0.7375,
+      "time_to_contact_mae_bucket": 0.8333333412806193
+    },
+    "best_epoch": 9,
+    "best_val_loss": 0.7825776892942149,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/future__raw_no_denoise__layer_27.pt",
+    "feature_mean_norm": 720.8035888671875,
+    "feature_std_mean": 10.845590591430664
+  },
+  "current|raw_no_denoise|layer=27": {
+    "target": "current",
+    "source": "raw_no_denoise",
+    "layer": 27,
+    "val": {
+      "loss": 0.2729890792519896,
+      "xyz_rmse_m": 0.11387963025094745,
+      "uv_mae_norm": 0.11691341267807501,
+      "depth_mae_m": 0.05892642692929798,
+      "contact_acc": 0.788461545964221,
+      "success_acc": 0.9947552447552448
+    },
+    "test": {
+      "loss": 0.25000603795051574,
+      "xyz_rmse_m": 0.11263704895973206,
+      "uv_mae_norm": 0.09180528422196706,
+      "depth_mae_m": 0.06356340696414312,
+      "contact_acc": 0.8416666746139526,
+      "success_acc": 0.9916666666666667
+    },
+    "best_epoch": 15,
+    "best_val_loss": 0.2729890792519896,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/current__raw_no_denoise__layer_27.pt",
+    "feature_mean_norm": 720.8035888671875,
+    "feature_std_mean": 10.845590591430664
+  },
+  "future|denoise_tau=0.900|layer=6": {
+    "target": "future",
+    "source": "denoise_tau=0.900",
+    "layer": 6,
+    "val": {
+      "loss": 0.9158146298015034,
+      "xyz_rmse_m": 0.1283708079294725,
+      "uv_mae_norm": 0.11134469717532605,
+      "depth_mae_m": 0.06482641662021617,
+      "velocity_mae_m_per_frame": 0.03610495472704614,
+      "contact_acc": 0.7615384684576021,
+      "success_acc": 0.9416084022788734,
+      "time_to_contact_acc": 0.6346153908676201,
+      "time_to_contact_mae_bucket": 1.2377622427640262
+    },
+    "test": {
+      "loss": 0.905555534362793,
+      "xyz_rmse_m": 0.12588217258453369,
+      "uv_mae_norm": 0.11230215430259705,
+      "depth_mae_m": 0.06403088867664337,
+      "velocity_mae_m_per_frame": 0.036545292536417646,
+      "contact_acc": 0.7570833444595337,
+      "success_acc": 0.9425000111262004,
+      "time_to_contact_acc": 0.6541666746139526,
+      "time_to_contact_mae_bucket": 1.187500007947286
+    },
+    "best_epoch": 15,
+    "best_val_loss": 0.9158146298015034,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/future__denoise_tau_0p900__layer_6.pt",
+    "feature_mean_norm": 130.508544921875,
+    "feature_std_mean": 0.7897902727127075
+  },
+  "current|denoise_tau=0.900|layer=6": {
+    "target": "current",
+    "source": "denoise_tau=0.900",
+    "layer": 6,
+    "val": {
+      "loss": 0.3140924916817592,
+      "xyz_rmse_m": 0.1357073017975667,
+      "uv_mae_norm": 0.1183006377382712,
+      "depth_mae_m": 0.05503143690578587,
+      "contact_acc": 0.7360139910157744,
+      "success_acc": 0.9947552447552448
+    },
+    "test": {
+      "loss": 0.32937624454498293,
+      "xyz_rmse_m": 0.12714174489180247,
+      "uv_mae_norm": 0.11106095214684804,
+      "depth_mae_m": 0.07588280737400055,
+      "contact_acc": 0.7479166666666667,
+      "success_acc": 0.9916666666666667
+    },
+    "best_epoch": 11,
+    "best_val_loss": 0.3140924916817592,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/current__denoise_tau_0p900__layer_6.pt",
+    "feature_mean_norm": 130.508544921875,
+    "feature_std_mean": 0.7897902727127075
+  },
+  "future|denoise_tau=0.900|layer=14": {
+    "target": "future",
+    "source": "denoise_tau=0.900",
+    "layer": 14,
+    "val": {
+      "loss": 0.9561886812423492,
+      "xyz_rmse_m": 0.1288794194693332,
+      "uv_mae_norm": 0.11463846881072838,
+      "depth_mae_m": 0.07866132858541462,
+      "velocity_mae_m_per_frame": 0.03996473415331407,
+      "contact_acc": 0.7440559518087161,
+      "success_acc": 0.9419580606313852,
+      "time_to_contact_acc": 0.645104899273052,
+      "time_to_contact_mae_bucket": 1.326923085259391
+    },
+    "test": {
+      "loss": 0.9427347024281819,
+      "xyz_rmse_m": 0.12507794896761576,
+      "uv_mae_norm": 0.10517525275548299,
+      "depth_mae_m": 0.08613933970530828,
+      "velocity_mae_m_per_frame": 0.036421319593985875,
+      "contact_acc": 0.7362500270207722,
+      "success_acc": 0.9412500143051148,
+      "time_to_contact_acc": 0.6416666706403097,
+      "time_to_contact_mae_bucket": 1.2958333412806193
+    },
+    "best_epoch": 8,
+    "best_val_loss": 0.9561886812423492,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/future__denoise_tau_0p900__layer_14.pt",
+    "feature_mean_norm": 236.3345947265625,
+    "feature_std_mean": 2.395394802093506
+  },
+  "current|denoise_tau=0.900|layer=14": {
+    "target": "current",
+    "source": "denoise_tau=0.900",
+    "layer": 14,
+    "val": {
+      "loss": 0.3145805088790147,
+      "xyz_rmse_m": 0.12211455706949834,
+      "uv_mae_norm": 0.127600193909415,
+      "depth_mae_m": 0.06784258642188319,
+      "contact_acc": 0.7639860189878024,
+      "success_acc": 0.9947552447552448
+    },
+    "test": {
+      "loss": 0.3204694112141927,
+      "xyz_rmse_m": 0.10306860903898875,
+      "uv_mae_norm": 0.11056328217188517,
+      "depth_mae_m": 0.08763560851414999,
+      "contact_acc": 0.725000003973643,
+      "success_acc": 0.9916666666666667
+    },
+    "best_epoch": 10,
+    "best_val_loss": 0.3145805088790147,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/current__denoise_tau_0p900__layer_14.pt",
+    "feature_mean_norm": 236.3345947265625,
+    "feature_std_mean": 2.395394802093506
+  },
+  "future|denoise_tau=0.900|layer=27": {
+    "target": "future",
+    "source": "denoise_tau=0.900",
+    "layer": 27,
+    "val": {
+      "loss": 0.9449149445220307,
+      "xyz_rmse_m": 0.13294189084659924,
+      "uv_mae_norm": 0.11299403350461613,
+      "depth_mae_m": 0.07122079277788843,
+      "velocity_mae_m_per_frame": 0.03721181477804284,
+      "contact_acc": 0.7321678391703359,
+      "success_acc": 0.9419580606313852,
+      "time_to_contact_acc": 0.6311188861206695,
+      "time_to_contact_mae_bucket": 1.3548951098968933
+    },
+    "test": {
+      "loss": 0.9068128387133281,
+      "xyz_rmse_m": 0.13447513282299042,
+      "uv_mae_norm": 0.10670792559782664,
+      "depth_mae_m": 0.06469414780537287,
+      "velocity_mae_m_per_frame": 0.039081283907095594,
+      "contact_acc": 0.7670833667119344,
+      "success_acc": 0.9412500143051148,
+      "time_to_contact_acc": 0.6916666746139526,
+      "time_to_contact_mae_bucket": 1.0833333412806192
+    },
+    "best_epoch": 7,
+    "best_val_loss": 0.9449149445220307,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/future__denoise_tau_0p900__layer_27.pt",
+    "feature_mean_norm": 667.3331909179688,
+    "feature_std_mean": 10.947044372558594
+  },
+  "current|denoise_tau=0.900|layer=27": {
+    "target": "current",
+    "source": "denoise_tau=0.900",
+    "layer": 27,
+    "val": {
+      "loss": 0.3147576032401799,
+      "xyz_rmse_m": 0.11686446512495721,
+      "uv_mae_norm": 0.1335493543973336,
+      "depth_mae_m": 0.05436291451845969,
+      "contact_acc": 0.7395104945122779,
+      "success_acc": 0.9947552447552448
+    },
+    "test": {
+      "loss": 0.3193765878677368,
+      "xyz_rmse_m": 0.118912868698438,
+      "uv_mae_norm": 0.10466215908527374,
+      "depth_mae_m": 0.06371463040510814,
+      "contact_acc": 0.750000003973643,
+      "success_acc": 0.9916666666666667
+    },
+    "best_epoch": 12,
+    "best_val_loss": 0.3147576032401799,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/current__denoise_tau_0p900__layer_27.pt",
+    "feature_mean_norm": 667.3331909179688,
+    "feature_std_mean": 10.947044372558594
+  },
+  "future|denoise_tau=0.750|layer=6": {
+    "target": "future",
+    "source": "denoise_tau=0.750",
+    "layer": 6,
+    "val": {
+      "loss": 0.8950988696171687,
+      "xyz_rmse_m": 0.12076847901294281,
+      "uv_mae_norm": 0.13535709877114196,
+      "depth_mae_m": 0.07773094202255036,
+      "velocity_mae_m_per_frame": 0.03582627623231261,
+      "contact_acc": 0.7632867293757992,
+      "success_acc": 0.9395105055162123,
+      "time_to_contact_acc": 0.6468531476867783,
+      "time_to_contact_mae_bucket": 1.1730769339141311
+    },
+    "test": {
+      "loss": 0.9198913931846618,
+      "xyz_rmse_m": 0.12259293794631958,
+      "uv_mae_norm": 0.0934845119714737,
+      "depth_mae_m": 0.07062718669573466,
+      "velocity_mae_m_per_frame": 0.03435027649005254,
+      "contact_acc": 0.7416666905085246,
+      "success_acc": 0.9408333381017049,
+      "time_to_contact_acc": 0.6291666666666667,
+      "time_to_contact_mae_bucket": 1.256250015894572
+    },
+    "best_epoch": 13,
+    "best_val_loss": 0.8950988696171687,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/future__denoise_tau_0p750__layer_6.pt",
+    "feature_mean_norm": 116.98253631591797,
+    "feature_std_mean": 0.893204927444458
+  },
+  "current|denoise_tau=0.750|layer=6": {
+    "target": "current",
+    "source": "denoise_tau=0.750",
+    "layer": 6,
+    "val": {
+      "loss": 0.305763937168188,
+      "xyz_rmse_m": 0.1221864480863918,
+      "uv_mae_norm": 0.13890463770269515,
+      "depth_mae_m": 0.06816709716315869,
+      "contact_acc": 0.7430069942574401,
+      "success_acc": 0.9947552447552448
+    },
+    "test": {
+      "loss": 0.3136812746524811,
+      "xyz_rmse_m": 0.12067293425401052,
+      "uv_mae_norm": 0.10443956951300302,
+      "depth_mae_m": 0.07340862254301707,
+      "contact_acc": 0.7625,
+      "success_acc": 0.9916666666666667
+    },
+    "best_epoch": 13,
+    "best_val_loss": 0.305763937168188,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/current__denoise_tau_0p750__layer_6.pt",
+    "feature_mean_norm": 116.98253631591797,
+    "feature_std_mean": 0.893204927444458
+  },
+  "future|denoise_tau=0.750|layer=14": {
+    "target": "future",
+    "source": "denoise_tau=0.750",
+    "layer": 14,
+    "val": {
+      "loss": 0.9463919367823568,
+      "xyz_rmse_m": 0.12335856925774287,
+      "uv_mae_norm": 0.11577812743770492,
+      "depth_mae_m": 0.07344276108941832,
+      "velocity_mae_m_per_frame": 0.034275762788899294,
+      "contact_acc": 0.7398601511975268,
+      "success_acc": 0.9419580606313852,
+      "time_to_contact_acc": 0.627622378456009,
+      "time_to_contact_mae_bucket": 1.3618881252262143
+    },
+    "test": {
+      "loss": 0.9439212481180826,
+      "xyz_rmse_m": 0.12045809626579285,
+      "uv_mae_norm": 0.09912349581718445,
+      "depth_mae_m": 0.08417720993359884,
+      "velocity_mae_m_per_frame": 0.0355353722969691,
+      "contact_acc": 0.7204166690508524,
+      "success_acc": 0.9412500143051148,
+      "time_to_contact_acc": 0.6333333373069763,
+      "time_to_contact_mae_bucket": 1.33125
+    },
+    "best_epoch": 7,
+    "best_val_loss": 0.9463919367823568,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/future__denoise_tau_0p750__layer_14.pt",
+    "feature_mean_norm": 230.55911254882812,
+    "feature_std_mean": 2.4336133003234863
+  },
+  "current|denoise_tau=0.750|layer=14": {
+    "target": "current",
+    "source": "denoise_tau=0.750",
+    "layer": 14,
+    "val": {
+      "loss": 0.3064446859843247,
+      "xyz_rmse_m": 0.11653211254339951,
+      "uv_mae_norm": 0.10599722827856357,
+      "depth_mae_m": 0.05981297267379461,
+      "contact_acc": 0.743006998425597,
+      "success_acc": 0.9947552447552448
+    },
+    "test": {
+      "loss": 0.3163683275381724,
+      "xyz_rmse_m": 0.1205135703086853,
+      "uv_mae_norm": 0.11212812115748723,
+      "depth_mae_m": 0.06538570324579875,
+      "contact_acc": 0.7333333373069764,
+      "success_acc": 0.9916666666666667
+    },
+    "best_epoch": 17,
+    "best_val_loss": 0.3064446859843247,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/current__denoise_tau_0p750__layer_14.pt",
+    "feature_mean_norm": 230.55911254882812,
+    "feature_std_mean": 2.4336133003234863
+  },
+  "future|denoise_tau=0.750|layer=27": {
+    "target": "future",
+    "source": "denoise_tau=0.750",
+    "layer": 27,
+    "val": {
+      "loss": 0.944606982744657,
+      "xyz_rmse_m": 0.11704301511074279,
+      "uv_mae_norm": 0.10592685973310804,
+      "depth_mae_m": 0.061685250147239315,
+      "velocity_mae_m_per_frame": 0.030341927326850957,
+      "contact_acc": 0.7360139981016413,
+      "success_acc": 0.9419580606313852,
+      "time_to_contact_acc": 0.6363636417822405,
+      "time_to_contact_mae_bucket": 1.3111888203587565
+    },
+    "test": {
+      "loss": 0.8923614223798116,
+      "xyz_rmse_m": 0.1329029401143392,
+      "uv_mae_norm": 0.10015351176261902,
+      "depth_mae_m": 0.06865228712558746,
+      "velocity_mae_m_per_frame": 0.029606433088580766,
+      "contact_acc": 0.7475000341733297,
+      "success_acc": 0.9412500143051148,
+      "time_to_contact_acc": 0.6520833412806193,
+      "time_to_contact_mae_bucket": 1.2395833492279054
+    },
+    "best_epoch": 15,
+    "best_val_loss": 0.944606982744657,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/future__denoise_tau_0p750__layer_27.pt",
+    "feature_mean_norm": 679.1736450195312,
+    "feature_std_mean": 10.623505592346191
+  },
+  "current|denoise_tau=0.750|layer=27": {
+    "target": "current",
+    "source": "denoise_tau=0.750",
+    "layer": 27,
+    "val": {
+      "loss": 0.31840319108296106,
+      "xyz_rmse_m": 0.11162878281169838,
+      "uv_mae_norm": 0.10895843861194757,
+      "depth_mae_m": 0.053279887285682705,
+      "contact_acc": 0.7307692316028621,
+      "success_acc": 0.9947552447552448
+    },
+    "test": {
+      "loss": 0.32201472520828245,
+      "xyz_rmse_m": 0.11459250251452129,
+      "uv_mae_norm": 0.10594228108723959,
+      "depth_mae_m": 0.06633254985014597,
+      "contact_acc": 0.6958333412806194,
+      "success_acc": 0.9916666666666667
+    },
+    "best_epoch": 14,
+    "best_val_loss": 0.31840319108296106,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/current__denoise_tau_0p750__layer_27.pt",
+    "feature_mean_norm": 679.1736450195312,
+    "feature_std_mean": 10.623505592346191
+  },
+  "future|denoise_tau=0.600|layer=6": {
+    "target": "future",
+    "source": "denoise_tau=0.600",
+    "layer": 6,
+    "val": {
+      "loss": 0.9021843079920415,
+      "xyz_rmse_m": 0.13333043331032865,
+      "uv_mae_norm": 0.1388490556420146,
+      "depth_mae_m": 0.06483082611348245,
+      "velocity_mae_m_per_frame": 0.03394178853376762,
+      "contact_acc": 0.7604895225771657,
+      "success_acc": 0.9419580606313852,
+      "time_to_contact_acc": 0.6555944097625626,
+      "time_to_contact_mae_bucket": 1.201048963553422
+    },
+    "test": {
+      "loss": 0.99761483669281,
+      "xyz_rmse_m": 0.1241609384616216,
+      "uv_mae_norm": 0.09915557305018106,
+      "depth_mae_m": 0.06590272883574168,
+      "velocity_mae_m_per_frame": 0.03486319134632746,
+      "contact_acc": 0.7195833683013916,
+      "success_acc": 0.9412500143051148,
+      "time_to_contact_acc": 0.6270833333333333,
+      "time_to_contact_mae_bucket": 1.3583333412806193
+    },
+    "best_epoch": 14,
+    "best_val_loss": 0.9021843079920415,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/future__denoise_tau_0p600__layer_6.pt",
+    "feature_mean_norm": 89.60527801513672,
+    "feature_std_mean": 1.0010051727294922
+  },
+  "current|denoise_tau=0.600|layer=6": {
+    "target": "current",
+    "source": "denoise_tau=0.600",
+    "layer": 6,
+    "val": {
+      "loss": 0.3108499343995448,
+      "xyz_rmse_m": 0.1286889095823248,
+      "uv_mae_norm": 0.1183374306330314,
+      "depth_mae_m": 0.06654641962238958,
+      "contact_acc": 0.7325174837679296,
+      "success_acc": 0.9947552447552448
+    },
+    "test": {
+      "loss": 0.3416972120602926,
+      "xyz_rmse_m": 0.11832451124986013,
+      "uv_mae_norm": 0.1004353016614914,
+      "depth_mae_m": 0.07145973642667135,
+      "contact_acc": 0.7666666746139527,
+      "success_acc": 0.9916666666666667
+    },
+    "best_epoch": 10,
+    "best_val_loss": 0.3108499343995448,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/current__denoise_tau_0p600__layer_6.pt",
+    "feature_mean_norm": 89.60527801513672,
+    "feature_std_mean": 1.0010051727294922
+  },
+  "future|denoise_tau=0.600|layer=14": {
+    "target": "future",
+    "source": "denoise_tau=0.600",
+    "layer": 14,
+    "val": {
+      "loss": 0.8991217588211273,
+      "xyz_rmse_m": 0.11903399176947721,
+      "uv_mae_norm": 0.11018770756004574,
+      "depth_mae_m": 0.05745323705714899,
+      "velocity_mae_m_per_frame": 0.025973175763041822,
+      "contact_acc": 0.7541958089475032,
+      "success_acc": 0.9416084156169758,
+      "time_to_contact_acc": 0.6451048959385265,
+      "time_to_contact_mae_bucket": 1.2202797336178226
+    },
+    "test": {
+      "loss": 0.9437292655309041,
+      "xyz_rmse_m": 0.11226439078648885,
+      "uv_mae_norm": 0.10101366291443507,
+      "depth_mae_m": 0.06172984143098195,
+      "velocity_mae_m_per_frame": 0.026030717169245085,
+      "contact_acc": 0.7741666913032532,
+      "success_acc": 0.9412500143051148,
+      "time_to_contact_acc": 0.6729166666666667,
+      "time_to_contact_mae_bucket": 1.1270833492279053
+    },
+    "best_epoch": 31,
+    "best_val_loss": 0.8991217588211273,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/future__denoise_tau_0p600__layer_14.pt",
+    "feature_mean_norm": 179.59495544433594,
+    "feature_std_mean": 2.508045196533203
+  },
+  "current|denoise_tau=0.600|layer=14": {
+    "target": "current",
+    "source": "denoise_tau=0.600",
+    "layer": 14,
+    "val": {
+      "loss": 0.29535882018662835,
+      "xyz_rmse_m": 0.10886434126983989,
+      "uv_mae_norm": 0.1104718069513361,
+      "depth_mae_m": 0.04748572611048088,
+      "contact_acc": 0.7727272781458768,
+      "success_acc": 0.9947552447552448
+    },
+    "test": {
+      "loss": 0.3128747125466665,
+      "xyz_rmse_m": 0.1013299584388733,
+      "uv_mae_norm": 0.09180519133806228,
+      "depth_mae_m": 0.06009144783020019,
+      "contact_acc": 0.7583333412806194,
+      "success_acc": 0.9916666666666667
+    },
+    "best_epoch": 26,
+    "best_val_loss": 0.29535882018662835,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/current__denoise_tau_0p600__layer_14.pt",
+    "feature_mean_norm": 179.59495544433594,
+    "feature_std_mean": 2.508045196533203
+  },
+  "future|denoise_tau=0.600|layer=27": {
+    "target": "future",
+    "source": "denoise_tau=0.600",
+    "layer": 27,
+    "val": {
+      "loss": 0.9662317429389153,
+      "xyz_rmse_m": 0.12250981828966341,
+      "uv_mae_norm": 0.11162468447135045,
+      "depth_mae_m": 0.067549929022789,
+      "velocity_mae_m_per_frame": 0.03305029340244673,
+      "contact_acc": 0.7335664492387038,
+      "success_acc": 0.9419580606313852,
+      "time_to_contact_acc": 0.6241258807949253,
+      "time_to_contact_mae_bucket": 1.3688811280510642
+    },
+    "test": {
+      "loss": 0.9871780872344971,
+      "xyz_rmse_m": 0.12638911803563435,
+      "uv_mae_norm": 0.09959640055894851,
+      "depth_mae_m": 0.06316737830638885,
+      "velocity_mae_m_per_frame": 0.034099735567967096,
+      "contact_acc": 0.7279166777928671,
+      "success_acc": 0.9412500143051148,
+      "time_to_contact_acc": 0.65,
+      "time_to_contact_mae_bucket": 1.268750007947286
+    },
+    "best_epoch": 7,
+    "best_val_loss": 0.9662317429389153,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/future__denoise_tau_0p600__layer_27.pt",
+    "feature_mean_norm": 682.7696533203125,
+    "feature_std_mean": 11.041587829589844
+  },
+  "current|denoise_tau=0.600|layer=27": {
+    "target": "current",
+    "source": "denoise_tau=0.600",
+    "layer": 27,
+    "val": {
+      "loss": 0.3218756251401835,
+      "xyz_rmse_m": 0.10460719971598445,
+      "uv_mae_norm": 0.1033889915976491,
+      "depth_mae_m": 0.05408605055271329,
+      "contact_acc": 0.7307692357710192,
+      "success_acc": 0.9947552447552448
+    },
+    "test": {
+      "loss": 0.3596564610799154,
+      "xyz_rmse_m": 0.12049886484940847,
+      "uv_mae_norm": 0.1094382772843043,
+      "depth_mae_m": 0.04877923627694448,
+      "contact_acc": 0.7020833373069764,
+      "success_acc": 0.9916666666666667
+    },
+    "best_epoch": 4,
+    "best_val_loss": 0.3218756251401835,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/current__denoise_tau_0p600__layer_27.pt",
+    "feature_mean_norm": 682.7696533203125,
+    "feature_std_mean": 11.041587829589844
+  },
+  "future|denoise_tau=0.450|layer=6": {
+    "target": "future",
+    "source": "denoise_tau=0.450",
+    "layer": 6,
+    "val": {
+      "loss": 0.9013466826685659,
+      "xyz_rmse_m": 0.12291003263496852,
+      "uv_mae_norm": 0.13278588683871956,
+      "depth_mae_m": 0.06900430981304262,
+      "velocity_mae_m_per_frame": 0.033783782403785864,
+      "contact_acc": 0.7482517607562191,
+      "success_acc": 0.9419580606313852,
+      "time_to_contact_acc": 0.6311188869543009,
+      "time_to_contact_mae_bucket": 1.3496503538185067
+    },
+    "test": {
+      "loss": 0.9558138449986776,
+      "xyz_rmse_m": 0.12490368882815044,
+      "uv_mae_norm": 0.09775764793157578,
+      "depth_mae_m": 0.06896162231763205,
+      "velocity_mae_m_per_frame": 0.03456877892216047,
+      "contact_acc": 0.7312500198682149,
+      "success_acc": 0.9412500143051148,
+      "time_to_contact_acc": 0.625000003973643,
+      "time_to_contact_mae_bucket": 1.437500007947286
+    },
+    "best_epoch": 11,
+    "best_val_loss": 0.9013466826685659,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/future__denoise_tau_0p450__layer_6.pt",
+    "feature_mean_norm": 105.39938354492188,
+    "feature_std_mean": 1.0212955474853516
+  },
+  "current|denoise_tau=0.450|layer=6": {
+    "target": "current",
+    "source": "denoise_tau=0.450",
+    "layer": 6,
+    "val": {
+      "loss": 0.2992926304573779,
+      "xyz_rmse_m": 0.11858854536618386,
+      "uv_mae_norm": 0.1157726140080632,
+      "depth_mae_m": 0.08011005011263427,
+      "contact_acc": 0.7552447564952023,
+      "success_acc": 0.9947552447552448
+    },
+    "test": {
+      "loss": 0.3302499334017436,
+      "xyz_rmse_m": 0.1151036520799001,
+      "uv_mae_norm": 0.10971647699673971,
+      "depth_mae_m": 0.09724750568469366,
+      "contact_acc": 0.7458333333333333,
+      "success_acc": 0.9916666666666667
+    },
+    "best_epoch": 18,
+    "best_val_loss": 0.2992926304573779,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/current__denoise_tau_0p450__layer_6.pt",
+    "feature_mean_norm": 105.39938354492188,
+    "feature_std_mean": 1.0212955474853516
+  },
+  "future|denoise_tau=0.450|layer=14": {
+    "target": "future",
+    "source": "denoise_tau=0.450",
+    "layer": 14,
+    "val": {
+      "loss": 0.9395814075336589,
+      "xyz_rmse_m": 0.11685088276863098,
+      "uv_mae_norm": 0.11898481085167065,
+      "depth_mae_m": 0.06240379703524229,
+      "velocity_mae_m_per_frame": 0.025686977626560453,
+      "contact_acc": 0.70734268343532,
+      "success_acc": 0.9416084156169758,
+      "time_to_contact_acc": 0.5874125932480072,
+      "time_to_contact_mae_bucket": 1.5576923135277274
+    },
+    "test": {
+      "loss": 0.8849517663319906,
+      "xyz_rmse_m": 0.1053706725438436,
+      "uv_mae_norm": 0.0965437928835551,
+      "depth_mae_m": 0.06789521674315134,
+      "velocity_mae_m_per_frame": 0.029171564181645713,
+      "contact_acc": 0.7666666746139527,
+      "success_acc": 0.9416666746139526,
+      "time_to_contact_acc": 0.6770833412806193,
+      "time_to_contact_mae_bucket": 1.125000007947286
+    },
+    "best_epoch": 24,
+    "best_val_loss": 0.9395814075336589,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/future__denoise_tau_0p450__layer_14.pt",
+    "feature_mean_norm": 141.88796997070312,
+    "feature_std_mean": 2.5333664417266846
+  },
+  "current|denoise_tau=0.450|layer=14": {
+    "target": "current",
+    "source": "denoise_tau=0.450",
+    "layer": 14,
+    "val": {
+      "loss": 0.3089897547151659,
+      "xyz_rmse_m": 0.11316160899359029,
+      "uv_mae_norm": 0.10603235787028199,
+      "depth_mae_m": 0.06081007764889644,
+      "contact_acc": 0.7622377643218408,
+      "success_acc": 0.9947552447552448
+    },
+    "test": {
+      "loss": 0.33236315051714577,
+      "xyz_rmse_m": 0.11859118044376374,
+      "uv_mae_norm": 0.1129299725095431,
+      "depth_mae_m": 0.06872741281986236,
+      "contact_acc": 0.712500003973643,
+      "success_acc": 0.9916666666666667
+    },
+    "best_epoch": 9,
+    "best_val_loss": 0.3089897547151659,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/current__denoise_tau_0p450__layer_14.pt",
+    "feature_mean_norm": 141.88796997070312,
+    "feature_std_mean": 2.5333664417266846
+  },
+  "future|denoise_tau=0.450|layer=27": {
+    "target": "future",
+    "source": "denoise_tau=0.450",
+    "layer": 27,
+    "val": {
+      "loss": 0.9767850845843762,
+      "xyz_rmse_m": 0.12433030003017478,
+      "uv_mae_norm": 0.10873792976974607,
+      "depth_mae_m": 0.06215213580460815,
+      "velocity_mae_m_per_frame": 0.03126190235460555,
+      "contact_acc": 0.7346154055395326,
+      "success_acc": 0.9419580606313852,
+      "time_to_contact_acc": 0.606643361645145,
+      "time_to_contact_mae_bucket": 1.5157342707360542
+    },
+    "test": {
+      "loss": 0.9982434749603272,
+      "xyz_rmse_m": 0.1293192813793818,
+      "uv_mae_norm": 0.10549719134966533,
+      "depth_mae_m": 0.060993066430091857,
+      "velocity_mae_m_per_frame": 0.030138528843720754,
+      "contact_acc": 0.7304166714350383,
+      "success_acc": 0.9412500143051148,
+      "time_to_contact_acc": 0.6375,
+      "time_to_contact_mae_bucket": 1.356250007947286
+    },
+    "best_epoch": 7,
+    "best_val_loss": 0.9767850845843762,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/future__denoise_tau_0p450__layer_27.pt",
+    "feature_mean_norm": 689.1901245117188,
+    "feature_std_mean": 11.074176788330078
+  },
+  "current|denoise_tau=0.450|layer=27": {
+    "target": "current",
+    "source": "denoise_tau=0.450",
+    "layer": 27,
+    "val": {
+      "loss": 0.31766463263885125,
+      "xyz_rmse_m": 0.1129746900259198,
+      "uv_mae_norm": 0.1288132670146602,
+      "depth_mae_m": 0.04300773362596552,
+      "contact_acc": 0.7342657363498127,
+      "success_acc": 0.9947552447552448
+    },
+    "test": {
+      "loss": 0.3362810214360555,
+      "xyz_rmse_m": 0.12076994578043619,
+      "uv_mae_norm": 0.09806293050448099,
+      "depth_mae_m": 0.06561948210000992,
+      "contact_acc": 0.737500003973643,
+      "success_acc": 0.9916666666666667
+    },
+    "best_epoch": 18,
+    "best_val_loss": 0.31766463263885125,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/current__denoise_tau_0p450__layer_27.pt",
+    "feature_mean_norm": 689.1901245117188,
+    "feature_std_mean": 11.074176788330078
+  },
+  "future|denoise_tau=0.300|layer=6": {
+    "target": "future",
+    "source": "denoise_tau=0.300",
+    "layer": 6,
+    "val": {
+      "loss": 0.8991420444075044,
+      "xyz_rmse_m": 0.12582098051801427,
+      "uv_mae_norm": 0.12016714661271422,
+      "depth_mae_m": 0.06665078415112062,
+      "velocity_mae_m_per_frame": 0.033374593834151756,
+      "contact_acc": 0.7496503670732458,
+      "success_acc": 0.9419580606313852,
+      "time_to_contact_acc": 0.6363636388645305,
+      "time_to_contact_mae_bucket": 1.3286713386749054
+    },
+    "test": {
+      "loss": 0.9728228330612183,
+      "xyz_rmse_m": 0.1267886499563853,
+      "uv_mae_norm": 0.09593449880679449,
+      "depth_mae_m": 0.0678793837626775,
+      "velocity_mae_m_per_frame": 0.03589553261796633,
+      "contact_acc": 0.7162500143051147,
+      "success_acc": 0.9412500143051148,
+      "time_to_contact_acc": 0.6145833412806193,
+      "time_to_contact_mae_bucket": 1.4708333492279053
+    },
+    "best_epoch": 11,
+    "best_val_loss": 0.8991420444075044,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/future__denoise_tau_0p300__layer_6.pt",
+    "feature_mean_norm": 136.3407745361328,
+    "feature_std_mean": 1.0564879179000854
+  },
+  "current|denoise_tau=0.300|layer=6": {
+    "target": "current",
+    "source": "denoise_tau=0.300",
+    "layer": 6,
+    "val": {
+      "loss": 0.296350111702939,
+      "xyz_rmse_m": 0.11963959423812119,
+      "uv_mae_norm": 0.11248454482822151,
+      "depth_mae_m": 0.07140167938037352,
+      "contact_acc": 0.7465034977539436,
+      "success_acc": 0.9947552447552448
+    },
+    "test": {
+      "loss": 0.34632856051127114,
+      "xyz_rmse_m": 0.12330387433369955,
+      "uv_mae_norm": 0.11347970366477966,
+      "depth_mae_m": 0.07722569406032562,
+      "contact_acc": 0.7416666706403097,
+      "success_acc": 0.9916666666666667
+    },
+    "best_epoch": 17,
+    "best_val_loss": 0.296350111702939,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/current__denoise_tau_0p300__layer_6.pt",
+    "feature_mean_norm": 136.3407745361328,
+    "feature_std_mean": 1.0564879179000854
+  },
+  "future|denoise_tau=0.300|layer=14": {
+    "target": "future",
+    "source": "denoise_tau=0.300",
+    "layer": 14,
+    "val": {
+      "loss": 0.9431383226301286,
+      "xyz_rmse_m": 0.1157104929427167,
+      "uv_mae_norm": 0.11851182814453032,
+      "depth_mae_m": 0.06142272086410256,
+      "velocity_mae_m_per_frame": 0.03142868560719323,
+      "contact_acc": 0.727622399380157,
+      "success_acc": 0.9419580606313852,
+      "time_to_contact_acc": 0.6118881127217433,
+      "time_to_contact_mae_bucket": 1.4300699409071382
+    },
+    "test": {
+      "loss": 0.8945374091466268,
+      "xyz_rmse_m": 0.112195618947347,
+      "uv_mae_norm": 0.09583737303813299,
+      "depth_mae_m": 0.0696230724453926,
+      "velocity_mae_m_per_frame": 0.0311683252453804,
+      "contact_acc": 0.7533333460489909,
+      "success_acc": 0.9412500143051148,
+      "time_to_contact_acc": 0.6541666746139526,
+      "time_to_contact_mae_bucket": 1.2354166746139525
+    },
+    "best_epoch": 17,
+    "best_val_loss": 0.9431383226301286,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/future__denoise_tau_0p300__layer_14.pt",
+    "feature_mean_norm": 131.1319580078125,
+    "feature_std_mean": 2.5858116149902344
+  },
+  "current|denoise_tau=0.300|layer=14": {
+    "target": "current",
+    "source": "denoise_tau=0.300",
+    "layer": 14,
+    "val": {
+      "loss": 0.30201345557099457,
+      "xyz_rmse_m": 0.11634935000976482,
+      "uv_mae_norm": 0.11234032805566188,
+      "depth_mae_m": 0.061431340586680636,
+      "contact_acc": 0.7587412620757843,
+      "success_acc": 0.9947552447552448
+    },
+    "test": {
+      "loss": 0.3147086123625437,
+      "xyz_rmse_m": 0.11237780352433523,
+      "uv_mae_norm": 0.10099782248338064,
+      "depth_mae_m": 0.07562857667605082,
+      "contact_acc": 0.7270833373069763,
+      "success_acc": 0.9916666666666667
+    },
+    "best_epoch": 16,
+    "best_val_loss": 0.30201345557099457,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/current__denoise_tau_0p300__layer_14.pt",
+    "feature_mean_norm": 131.1319580078125,
+    "feature_std_mean": 2.5858116149902344
+  },
+  "future|denoise_tau=0.300|layer=27": {
+    "target": "future",
+    "source": "denoise_tau=0.300",
+    "layer": 27,
+    "val": {
+      "loss": 0.9870722348039801,
+      "xyz_rmse_m": 0.12516521678104267,
+      "uv_mae_norm": 0.09677737232271608,
+      "depth_mae_m": 0.07361163506349483,
+      "velocity_mae_m_per_frame": 0.036895177502940586,
+      "contact_acc": 0.7146853300241324,
+      "success_acc": 0.9419580606313852,
+      "time_to_contact_acc": 0.5996503534016909,
+      "time_to_contact_mae_bucket": 1.5541958091975925
+    },
+    "test": {
+      "loss": 0.9740925629933676,
+      "xyz_rmse_m": 0.1270232965548833,
+      "uv_mae_norm": 0.10968617300192515,
+      "depth_mae_m": 0.06742284595966339,
+      "velocity_mae_m_per_frame": 0.03289006104071935,
+      "contact_acc": 0.7429166952768962,
+      "success_acc": 0.9412500143051148,
+      "time_to_contact_acc": 0.6458333373069763,
+      "time_to_contact_mae_bucket": 1.325
+    },
+    "best_epoch": 8,
+    "best_val_loss": 0.9870722348039801,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/future__denoise_tau_0p300__layer_27.pt",
+    "feature_mean_norm": 703.6119995117188,
+    "feature_std_mean": 11.034168243408203
+  },
+  "current|denoise_tau=0.300|layer=27": {
+    "target": "current",
+    "source": "denoise_tau=0.300",
+    "layer": 27,
+    "val": {
+      "loss": 0.3236242470207748,
+      "xyz_rmse_m": 0.11532512671880789,
+      "uv_mae_norm": 0.117025637282775,
+      "depth_mae_m": 0.05185639493532114,
+      "contact_acc": 0.7447552480897703,
+      "success_acc": 0.9947552447552448
+    },
+    "test": {
+      "loss": 0.35809481938680016,
+      "xyz_rmse_m": 0.11696542004744212,
+      "uv_mae_norm": 0.10439756611982981,
+      "depth_mae_m": 0.0458759476741155,
+      "contact_acc": 0.7125,
+      "success_acc": 0.9916666666666667
+    },
+    "best_epoch": 11,
+    "best_val_loss": 0.3236242470207748,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/current__denoise_tau_0p300__layer_27.pt",
+    "feature_mean_norm": 703.6119995117188,
+    "feature_std_mean": 11.034168243408203
+  },
+  "future|denoise_tau=0.200|layer=6": {
+    "target": "future",
+    "source": "denoise_tau=0.200",
+    "layer": 6,
+    "val": {
+      "loss": 0.8996013561328808,
+      "xyz_rmse_m": 0.12101552098781079,
+      "uv_mae_norm": 0.1113313612612811,
+      "depth_mae_m": 0.07014648095294312,
+      "velocity_mae_m_per_frame": 0.03142568557620882,
+      "contact_acc": 0.7601398725609679,
+      "success_acc": 0.9419580606313852,
+      "time_to_contact_acc": 0.6625874150883068,
+      "time_to_contact_mae_bucket": 1.187062945399251
+    },
+    "test": {
+      "loss": 1.0061541080474854,
+      "xyz_rmse_m": 0.12232276499271393,
+      "uv_mae_norm": 0.11315022259950638,
+      "depth_mae_m": 0.07573367853959402,
+      "velocity_mae_m_per_frame": 0.03316686525940895,
+      "contact_acc": 0.7087500174840291,
+      "success_acc": 0.9412500143051148,
+      "time_to_contact_acc": 0.6000000079472859,
+      "time_to_contact_mae_bucket": 1.4604166825612386
+    },
+    "best_epoch": 15,
+    "best_val_loss": 0.8996013561328808,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/future__denoise_tau_0p200__layer_6.pt",
+    "feature_mean_norm": 157.5539093017578,
+    "feature_std_mean": 1.0872052907943726
+  },
+  "current|denoise_tau=0.200|layer=6": {
+    "target": "current",
+    "source": "denoise_tau=0.200",
+    "layer": 6,
+    "val": {
+      "loss": 0.3014844858146214,
+      "xyz_rmse_m": 0.1193176017149345,
+      "uv_mae_norm": 0.11592654539988591,
+      "depth_mae_m": 0.08739817069543825,
+      "contact_acc": 0.7500000012504471,
+      "success_acc": 0.9947552447552448
+    },
+    "test": {
+      "loss": 0.3433829307556152,
+      "xyz_rmse_m": 0.10964829921722412,
+      "uv_mae_norm": 0.12010018626848856,
+      "depth_mae_m": 0.0732627972960472,
+      "contact_acc": 0.7479166706403096,
+      "success_acc": 0.9916666666666667
+    },
+    "best_epoch": 10,
+    "best_val_loss": 0.3014844858146214,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/current__denoise_tau_0p200__layer_6.pt",
+    "feature_mean_norm": 157.5539093017578,
+    "feature_std_mean": 1.0872052907943726
+  },
+  "future|denoise_tau=0.200|layer=14": {
+    "target": "future",
+    "source": "denoise_tau=0.200",
+    "layer": 14,
+    "val": {
+      "loss": 0.9244738525443977,
+      "xyz_rmse_m": 0.11678126235525091,
+      "uv_mae_norm": 0.12014217091190231,
+      "depth_mae_m": 0.059705845099854306,
+      "velocity_mae_m_per_frame": 0.029211659297034457,
+      "contact_acc": 0.731818192071848,
+      "success_acc": 0.9419580606313852,
+      "time_to_contact_acc": 0.6223776273794107,
+      "time_to_contact_mae_bucket": 1.39160839661018
+    },
+    "test": {
+      "loss": 0.8845791180928548,
+      "xyz_rmse_m": 0.10889759560426077,
+      "uv_mae_norm": 0.09377304315567017,
+      "depth_mae_m": 0.0693748414516449,
+      "velocity_mae_m_per_frame": 0.03146722242236137,
+      "contact_acc": 0.7441666801770528,
+      "success_acc": 0.9412500143051148,
+      "time_to_contact_acc": 0.650000003973643,
+      "time_to_contact_mae_bucket": 1.2666666666666666
+    },
+    "best_epoch": 17,
+    "best_val_loss": 0.9244738525443977,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/future__denoise_tau_0p200__layer_14.pt",
+    "feature_mean_norm": 142.43516540527344,
+    "feature_std_mean": 2.62542462348938
+  },
+  "current|denoise_tau=0.200|layer=14": {
+    "target": "current",
+    "source": "denoise_tau=0.200",
+    "layer": 14,
+    "val": {
+      "loss": 0.29991503028602867,
+      "xyz_rmse_m": 0.10828510041420276,
+      "uv_mae_norm": 0.11012599492198104,
+      "depth_mae_m": 0.052825553746490214,
+      "contact_acc": 0.7430069950910715,
+      "success_acc": 0.9947552447552448
+    },
+    "test": {
+      "loss": 0.3059091071287791,
+      "xyz_rmse_m": 0.10231621662775675,
+      "uv_mae_norm": 0.09491874674956004,
+      "depth_mae_m": 0.04900314435362816,
+      "contact_acc": 0.7208333333333333,
+      "success_acc": 0.9916666666666667
+    },
+    "best_epoch": 21,
+    "best_val_loss": 0.29991503028602867,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/current__denoise_tau_0p200__layer_14.pt",
+    "feature_mean_norm": 142.43516540527344,
+    "feature_std_mean": 2.62542462348938
+  },
+  "future|denoise_tau=0.200|layer=27": {
+    "target": "future",
+    "source": "denoise_tau=0.200",
+    "layer": 27,
+    "val": {
+      "loss": 0.9876669720336274,
+      "xyz_rmse_m": 0.11618826637318085,
+      "uv_mae_norm": 0.12162559917131505,
+      "depth_mae_m": 0.060408180306007815,
+      "velocity_mae_m_per_frame": 0.030590361440098367,
+      "contact_acc": 0.6951049066090084,
+      "success_acc": 0.9419580606313852,
+      "time_to_contact_acc": 0.5821678334182793,
+      "time_to_contact_mae_bucket": 1.5979021062384118
+    },
+    "test": {
+      "loss": 0.9737468083699544,
+      "xyz_rmse_m": 0.11885689596335093,
+      "uv_mae_norm": 0.09396528452634811,
+      "depth_mae_m": 0.05695667068163554,
+      "velocity_mae_m_per_frame": 0.029537551601727805,
+      "contact_acc": 0.7450000166893005,
+      "success_acc": 0.9412500143051148,
+      "time_to_contact_acc": 0.6354166666666666,
+      "time_to_contact_mae_bucket": 1.3395833412806193
+    },
+    "best_epoch": 11,
+    "best_val_loss": 0.9876669720336274,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/future__denoise_tau_0p200__layer_27.pt",
+    "feature_mean_norm": 725.1434936523438,
+    "feature_std_mean": 11.032220840454102
+  },
+  "current|denoise_tau=0.200|layer=27": {
+    "target": "current",
+    "source": "denoise_tau=0.200",
+    "layer": 27,
+    "val": {
+      "loss": 0.32669946634686076,
+      "xyz_rmse_m": 0.12430037172524246,
+      "uv_mae_norm": 0.12994289643072582,
+      "depth_mae_m": 0.047979638866194475,
+      "contact_acc": 0.725524477608554,
+      "success_acc": 0.9947552447552448
+    },
+    "test": {
+      "loss": 0.36430867910385134,
+      "xyz_rmse_m": 0.13312299350897472,
+      "uv_mae_norm": 0.10566101372241973,
+      "depth_mae_m": 0.04308673292398453,
+      "contact_acc": 0.7020833373069764,
+      "success_acc": 0.9916666666666667
+    },
+    "best_epoch": 8,
+    "best_val_loss": 0.32669946634686076,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/current__denoise_tau_0p200__layer_27.pt",
+    "feature_mean_norm": 725.1434936523438,
+    "feature_std_mean": 11.032220840454102
+  },
+  "future|denoise_tau=0.100|layer=6": {
+    "target": "future",
+    "source": "denoise_tau=0.100",
+    "layer": 6,
+    "val": {
+      "loss": 0.878566764451407,
+      "xyz_rmse_m": 0.12495358996874803,
+      "uv_mae_norm": 0.11478980213820518,
+      "depth_mae_m": 0.07887605806955925,
+      "velocity_mae_m_per_frame": 0.03310511693671033,
+      "contact_acc": 0.769230770898032,
+      "success_acc": 0.9419580606313852,
+      "time_to_contact_acc": 0.6538461575974951,
+      "time_to_contact_mae_bucket": 1.2325174925210594
+    },
+    "test": {
+      "loss": 0.9881354014078776,
+      "xyz_rmse_m": 0.12185323536396027,
+      "uv_mae_norm": 0.10515044232209524,
+      "depth_mae_m": 0.07857948442300161,
+      "velocity_mae_m_per_frame": 0.03489856173594793,
+      "contact_acc": 0.7129166801770528,
+      "success_acc": 0.9412500143051148,
+      "time_to_contact_acc": 0.618750003973643,
+      "time_to_contact_mae_bucket": 1.44375
+    },
+    "best_epoch": 11,
+    "best_val_loss": 0.878566764451407,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/future__denoise_tau_0p100__layer_6.pt",
+    "feature_mean_norm": 172.3985137939453,
+    "feature_std_mean": 1.1227517127990723
+  },
+  "current|denoise_tau=0.100|layer=6": {
+    "target": "current",
+    "source": "denoise_tau=0.100",
+    "layer": 6,
+    "val": {
+      "loss": 0.29151613958232053,
+      "xyz_rmse_m": 0.12443929973182145,
+      "uv_mae_norm": 0.12100442243622733,
+      "depth_mae_m": 0.05906615570395977,
+      "contact_acc": 0.7587412624926,
+      "success_acc": 0.9947552447552448
+    },
+    "test": {
+      "loss": 0.35585824251174925,
+      "xyz_rmse_m": 0.12015038927396139,
+      "uv_mae_norm": 0.12146201034386953,
+      "depth_mae_m": 0.04788800353805224,
+      "contact_acc": 0.7104166746139526,
+      "success_acc": 0.9916666666666667
+    },
+    "best_epoch": 19,
+    "best_val_loss": 0.29151613958232053,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/current__denoise_tau_0p100__layer_6.pt",
+    "feature_mean_norm": 172.3985137939453,
+    "feature_std_mean": 1.1227517127990723
+  },
+  "future|denoise_tau=0.100|layer=14": {
+    "target": "future",
+    "source": "denoise_tau=0.100",
+    "layer": 14,
+    "val": {
+      "loss": 0.950026967308738,
+      "xyz_rmse_m": 0.1181261276865339,
+      "uv_mae_norm": 0.11484819796535518,
+      "depth_mae_m": 0.06539142861232891,
+      "velocity_mae_m_per_frame": 0.033439205112782394,
+      "contact_acc": 0.7370629498174974,
+      "success_acc": 0.9419580606313852,
+      "time_to_contact_acc": 0.5979021033207019,
+      "time_to_contact_mae_bucket": 1.515734272403317
+    },
+    "test": {
+      "loss": 0.9111999789873759,
+      "xyz_rmse_m": 0.10856360594431559,
+      "uv_mae_norm": 0.0928594653805097,
+      "depth_mae_m": 0.06517575532197953,
+      "velocity_mae_m_per_frame": 0.0336799090107282,
+      "contact_acc": 0.7312500198682149,
+      "success_acc": 0.9412500143051148,
+      "time_to_contact_acc": 0.64375,
+      "time_to_contact_mae_bucket": 1.2854166746139526
+    },
+    "best_epoch": 13,
+    "best_val_loss": 0.950026967308738,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/future__denoise_tau_0p100__layer_14.pt",
+    "feature_mean_norm": 160.04989624023438,
+    "feature_std_mean": 2.6732349395751953
+  },
+  "current|denoise_tau=0.100|layer=14": {
+    "target": "current",
+    "source": "denoise_tau=0.100",
+    "layer": 14,
+    "val": {
+      "loss": 0.30222308739915593,
+      "xyz_rmse_m": 0.1163455078547651,
+      "uv_mae_norm": 0.10541598806222835,
+      "depth_mae_m": 0.05632005189056997,
+      "contact_acc": 0.7692307742325576,
+      "success_acc": 0.9947552447552448
+    },
+    "test": {
+      "loss": 0.30466662645339965,
+      "xyz_rmse_m": 0.10403811484575272,
+      "uv_mae_norm": 0.10489602188269297,
+      "depth_mae_m": 0.06984957307577133,
+      "contact_acc": 0.7708333373069763,
+      "success_acc": 0.9916666666666667
+    },
+    "best_epoch": 21,
+    "best_val_loss": 0.30222308739915593,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/current__denoise_tau_0p100__layer_14.pt",
+    "feature_mean_norm": 160.04989624023438,
+    "feature_std_mean": 2.6732349395751953
+  },
+  "future|denoise_tau=0.100|layer=27": {
+    "target": "future",
+    "source": "denoise_tau=0.100",
+    "layer": 27,
+    "val": {
+      "loss": 0.9753754739161138,
+      "xyz_rmse_m": 0.12536158605472192,
+      "uv_mae_norm": 0.11199581268784049,
+      "depth_mae_m": 0.06317102794463818,
+      "velocity_mae_m_per_frame": 0.032818011210098134,
+      "contact_acc": 0.7216783391012178,
+      "success_acc": 0.9419580606313852,
+      "time_to_contact_acc": 0.620629371463002,
+      "time_to_contact_mae_bucket": 1.4213286771640912
+    },
+    "test": {
+      "loss": 0.9523080666859944,
+      "xyz_rmse_m": 0.12163292666276296,
+      "uv_mae_norm": 0.09718687136967977,
+      "depth_mae_m": 0.05058411533633868,
+      "velocity_mae_m_per_frame": 0.02991341638068358,
+      "contact_acc": 0.7383333484331767,
+      "success_acc": 0.9412500143051148,
+      "time_to_contact_acc": 0.6333333333333333,
+      "time_to_contact_mae_bucket": 1.3645833412806192
+    },
+    "best_epoch": 11,
+    "best_val_loss": 0.9753754739161138,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/future__denoise_tau_0p100__layer_27.pt",
+    "feature_mean_norm": 751.7799072265625,
+    "feature_std_mean": 11.093252182006836
+  },
+  "current|denoise_tau=0.100|layer=27": {
+    "target": "current",
+    "source": "denoise_tau=0.100",
+    "layer": 27,
+    "val": {
+      "loss": 0.32172820097082977,
+      "xyz_rmse_m": 0.12184390154751865,
+      "uv_mae_norm": 0.11604298265663894,
+      "depth_mae_m": 0.06378624468416601,
+      "contact_acc": 0.7307692366046505,
+      "success_acc": 0.9947552447552448
+    },
+    "test": {
+      "loss": 0.3406782786051432,
+      "xyz_rmse_m": 0.11363141338030497,
+      "uv_mae_norm": 0.09680483788251877,
+      "depth_mae_m": 0.050248068571090695,
+      "contact_acc": 0.7104166746139526,
+      "success_acc": 0.9916666666666667
+    },
+    "best_epoch": 10,
+    "best_val_loss": 0.32172820097082977,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/current__denoise_tau_0p100__layer_27.pt",
+    "feature_mean_norm": 751.7799072265625,
+    "feature_std_mean": 11.093252182006836
+  },
+  "future|denoise_tau=0.000|layer=6": {
+    "target": "future",
+    "source": "denoise_tau=0.000",
+    "layer": 6,
+    "val": {
+      "loss": 0.8757188049229708,
+      "xyz_rmse_m": 0.12527382238344711,
+      "uv_mae_norm": 0.1260560525880827,
+      "depth_mae_m": 0.07327348994208382,
+      "velocity_mae_m_per_frame": 0.037346460680653164,
+      "contact_acc": 0.7818181985741729,
+      "success_acc": 0.9419580606313852,
+      "time_to_contact_acc": 0.6783216791553097,
+      "time_to_contact_mae_bucket": 1.1416083974438114
+    },
+    "test": {
+      "loss": 0.9330273787180583,
+      "xyz_rmse_m": 0.12611128489176432,
+      "uv_mae_norm": 0.11879765292008718,
+      "depth_mae_m": 0.0735248401761055,
+      "velocity_mae_m_per_frame": 0.03353622605403264,
+      "contact_acc": 0.7537500222524007,
+      "success_acc": 0.9412500143051148,
+      "time_to_contact_acc": 0.6458333333333334,
+      "time_to_contact_mae_bucket": 1.318750007947286
+    },
+    "best_epoch": 9,
+    "best_val_loss": 0.8757188049229708,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/future__denoise_tau_0p000__layer_6.pt",
+    "feature_mean_norm": 179.68392944335938,
+    "feature_std_mean": 1.1585650444030762
+  },
+  "current|denoise_tau=0.000|layer=6": {
+    "target": "current",
+    "source": "denoise_tau=0.000",
+    "layer": 6,
+    "val": {
+      "loss": 0.28511892061133487,
+      "xyz_rmse_m": 0.12786223452824813,
+      "uv_mae_norm": 0.11703313178532607,
+      "depth_mae_m": 0.057850620598642974,
+      "contact_acc": 0.783216784884046,
+      "success_acc": 0.9947552447552448
+    },
+    "test": {
+      "loss": 0.3439909736315409,
+      "xyz_rmse_m": 0.11790015896161397,
+      "uv_mae_norm": 0.11306992371877035,
+      "depth_mae_m": 0.059184264640013376,
+      "contact_acc": 0.7645833333333333,
+      "success_acc": 0.9916666666666667
+    },
+    "best_epoch": 20,
+    "best_val_loss": 0.28511892061133487,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/current__denoise_tau_0p000__layer_6.pt",
+    "feature_mean_norm": 179.68392944335938,
+    "feature_std_mean": 1.1585650444030762
+  },
+  "future|denoise_tau=0.000|layer=14": {
+    "target": "future",
+    "source": "denoise_tau=0.000",
+    "layer": 14,
+    "val": {
+      "loss": 0.94666448214671,
+      "xyz_rmse_m": 0.12176506262975972,
+      "uv_mae_norm": 0.10197645738408283,
+      "depth_mae_m": 0.07360923113106015,
+      "velocity_mae_m_per_frame": 0.03621203402851845,
+      "contact_acc": 0.751048953383119,
+      "success_acc": 0.9419580606313852,
+      "time_to_contact_acc": 0.64160839661018,
+      "time_to_contact_mae_bucket": 1.2814685364703198
+    },
+    "test": {
+      "loss": 0.9742231766382853,
+      "xyz_rmse_m": 0.11727403998374938,
+      "uv_mae_norm": 0.11987240016460418,
+      "depth_mae_m": 0.08052104314168294,
+      "velocity_mae_m_per_frame": 0.036027116576830547,
+      "contact_acc": 0.7275000174840291,
+      "success_acc": 0.9412500143051148,
+      "time_to_contact_acc": 0.6395833373069764,
+      "time_to_contact_mae_bucket": 1.300000015894572
+    },
+    "best_epoch": 8,
+    "best_val_loss": 0.94666448214671,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/future__denoise_tau_0p000__layer_14.pt",
+    "feature_mean_norm": 179.233642578125,
+    "feature_std_mean": 2.7182631492614746
+  },
+  "current|denoise_tau=0.000|layer=14": {
+    "target": "current",
+    "source": "denoise_tau=0.000",
+    "layer": 14,
+    "val": {
+      "loss": 0.2975137990254622,
+      "xyz_rmse_m": 0.11356640101729573,
+      "uv_mae_norm": 0.1060751889135454,
+      "depth_mae_m": 0.05128995867094377,
+      "contact_acc": 0.7692307742325576,
+      "success_acc": 0.9947552447552448
+    },
+    "test": {
+      "loss": 0.30638381640116374,
+      "xyz_rmse_m": 0.1036296675602595,
+      "uv_mae_norm": 0.11124942302703858,
+      "depth_mae_m": 0.06315929094950358,
+      "contact_acc": 0.7520833333333333,
+      "success_acc": 0.9916666666666667
+    },
+    "best_epoch": 27,
+    "best_val_loss": 0.2975137990254622,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/current__denoise_tau_0p000__layer_14.pt",
+    "feature_mean_norm": 179.233642578125,
+    "feature_std_mean": 2.7182631492614746
+  },
+  "future|denoise_tau=0.000|layer=27": {
+    "target": "future",
+    "source": "denoise_tau=0.000",
+    "layer": 27,
+    "val": {
+      "loss": 0.9605995324941782,
+      "xyz_rmse_m": 0.11537836804673389,
+      "uv_mae_norm": 0.11941782968652832,
+      "depth_mae_m": 0.06739841099385616,
+      "velocity_mae_m_per_frame": 0.03482660114556759,
+      "contact_acc": 0.7349650484698635,
+      "success_acc": 0.9419580606313852,
+      "time_to_contact_acc": 0.639860141110587,
+      "time_to_contact_mae_bucket": 1.3216783300146355
+    },
+    "test": {
+      "loss": 0.9121795654296875,
+      "xyz_rmse_m": 0.11812301874160766,
+      "uv_mae_norm": 0.09249990880489349,
+      "depth_mae_m": 0.055009779334068296,
+      "velocity_mae_m_per_frame": 0.032126636058092115,
+      "contact_acc": 0.7504166960716248,
+      "success_acc": 0.9412500143051148,
+      "time_to_contact_acc": 0.6625000079472859,
+      "time_to_contact_mae_bucket": 1.2270833492279052
+    },
+    "best_epoch": 10,
+    "best_val_loss": 0.9605995324941782,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/future__denoise_tau_0p000__layer_27.pt",
+    "feature_mean_norm": 772.67041015625,
+    "feature_std_mean": 11.19497299194336
+  },
+  "current|denoise_tau=0.000|layer=27": {
+    "target": "current",
+    "source": "denoise_tau=0.000",
+    "layer": 27,
+    "val": {
+      "loss": 0.31558453432329886,
+      "xyz_rmse_m": 0.11529719980655016,
+      "uv_mae_norm": 0.11449360008631553,
+      "depth_mae_m": 0.06509933143958345,
+      "contact_acc": 0.7150349662854121,
+      "success_acc": 0.9947552447552448
+    },
+    "test": {
+      "loss": 0.33322293957074484,
+      "xyz_rmse_m": 0.12656672497590382,
+      "uv_mae_norm": 0.09635932644208273,
+      "depth_mae_m": 0.07004731744527817,
+      "contact_acc": 0.7166666706403096,
+      "success_acc": 0.9916666666666667
+    },
+    "best_epoch": 10,
+    "best_val_loss": 0.31558453432329886,
+    "checkpoint": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_denoise_probe_20260525_144759/probe_ckpts/current__denoise_tau_0p000__layer_27.pt",
+    "feature_mean_norm": 772.67041015625,
+    "feature_std_mean": 11.19497299194336
+  }
+}

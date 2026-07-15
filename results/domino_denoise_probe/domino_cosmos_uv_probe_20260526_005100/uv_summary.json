@@ -1,0 +1,48 @@
+{
+  "uv_summary_csv": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_uv_probe_20260526_005100/uv_summary.csv",
+  "uv_metrics_csv": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_uv_probe_20260526_005100/uv_per_source_layer_metrics.csv",
+  "uv_training_curves_csv": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_uv_probe_20260526_005100/uv_probe_training_curves.csv",
+  "uv_checkpoint_dir": "/data/repos/domino_cosmos_denoise_probe/results/domino_cosmos_uv_probe_20260526_005100/uv_probe_ckpts",
+  "best_future_uv_denoise_vs_raw": {
+    "layer": 27,
+    "source": "denoise_tau=0.600",
+    "target": "future_uv",
+    "test_loss": 0.0201700653880834,
+    "loss_improvement_vs_raw": 0.1411662131917145,
+    "uv_mse_norm": 0.0201700653880834,
+    "uv_rmse_norm": 0.1199922174215316,
+    "uv_mae_norm": 0.0974863201379776,
+    "uv_mae_px": 27.27629000345866,
+    "uv_mae_px_improvement_vs_raw": 0.049873843878196135,
+    "valid_fraction": 0.4775000135103861
+  },
+  "raw_current_uv_sanity": [
+    {
+      "layer": 6,
+      "source": "raw_no_denoise",
+      "target": "current_uv_sanity",
+      "test_loss": 0.0202915103485186,
+      "uv_mae_norm": 0.09827607969443,
+      "uv_mae_px": 27.396951293945317,
+      "valid_fraction": 0.4937500079472859
+    },
+    {
+      "layer": 14,
+      "source": "raw_no_denoise",
+      "target": "current_uv_sanity",
+      "test_loss": 0.0255455374717712,
+      "uv_mae_norm": 0.1131701235969861,
+      "uv_mae_px": 30.95293795267741,
+      "valid_fraction": 0.4937500079472859
+    },
+    {
+      "layer": 27,
+      "source": "raw_no_denoise",
+      "target": "current_uv_sanity",
+      "test_loss": 0.0252438845733801,
+      "uv_mae_norm": 0.1030430396397908,
+      "uv_mae_px": 29.331968943278,
+      "valid_fraction": 0.4937500079472859
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+project:
+  run_name: cosmos_dom_chunk198_fulltok_s30_current_obj_pos_strongreadout_e125_probe
+  seed: 42
+
+paths:
+  latent_root: /data/datasets/DOM_latents/world_model_probe/{backbone}
+  checkpoint_dir: /data/checkpoints/world_model_probe/{run_name}
+
+data:
+  adapter: world_model_probe.data.dom:iter_probe_samples
+  dom_root: /data/datasets/DOM
+  chunk_id: 198
+  video_key: observation.images.opst_cam
+  image_size: null           # native starVLA wrapper owns preprocessing/resize
+  input_frames: 8
+  frame_stride: 1
+  sample_stride: 30
+  max_samples_per_episode: null
+  splits:
+    train: [198000, 198800]
+    eval: [198800, 199000]
+
+targets:
+  mode: absolute
+  horizons: [0]
+  target_keys: [obj_pos]
+  obj_pos_indices: [0, 1, 2]
+  obj_vel_indices: [6, 7, 8]
+  arm_pos_indices: [0, 1, 2]
+
+backbone:
+  name: cosmos_chunk198_current_fulltok_s30
+  adapter: world_model_probe.backbones.starvla_native:StarVLACosmosPredict2BackboneAdapter
+  model_id: /data/repos/starVLA/playground/Pretrained_models/nvidia/Cosmos-Predict2-2B-Video2World
+  cache_dir: null
+  local_files_only: true
+  device: cuda
+  dtype: bfloat16
+  cache_dtype: float16
+  video_size: [320, 240]     # passed to starVLA framework.obs_image_size
+  extract_layers: [-1]
+  max_tokens: null
+  prompt_template: "{task}"
+
+probe:
+  backbone_dim: auto
+  query_dim: 768
+  num_queries: 64
+  num_obj_queries: 32
+  num_heads: 12
+  num_readout_layers: 4
+  readout_ffn_dim: 3072
+  use_query_self_attn: true
+  head_hidden_dim: 1024
+  dropout: 0.05
+
+training:
+  device: cuda
+  epochs: 125
+  batch_size: 32
+  eval_batch_size: 64
+  num_workers: 4
+  lr: 1.0e-4
+  weight_decay: 1.0e-4
+  max_grad_norm: 1.0
+  amp: true
+  scheduler:
+    type: cosine
+    warmup_steps: 500
+    min_lr_ratio: 0.05
+  ema_beta: 0.98
+  loss_type: l2
+  loss_weights:
+    obj_pos: 1.0
+  log_every: 50
+  eval_every: 500
+
+logging:
+  wandb:
+    enabled: true
+    entity: weisb25-tsinghua-university
+    project: world_model_probe_DOMINO
+    name: "{run_name}"
+    group: "{backbone}"
+    mode: online
+    tags: ["dom", "world_model_probe", "{backbone}"]
+    resume: allow
+
+evaluation:
+  device: cuda
+  batch_size: 64
+  num_workers: 4
+  compute_baselines: false
+  prediction_csv: /data/checkpoints/world_model_probe/{run_name}/eval_{split}_predictions.csv
+  relative_error_eps: 1.0e-6

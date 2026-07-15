@@ -1,0 +1,10 @@
+output_root: /data/repos/cosmos_causal_probe/outputs/cfg_sequence_sweep_small
+runs: 5
+A1 rows: 196
+A0 rows: 44
+
+Best A1 by history:
+  cond_frames=1 cond_lat=1 future_slots=1 cfg=7.0 sigma=2.0 K=5 x_final=0.4182 gain=-0.4099 seq=0.4182 seq_gain=-0.4099 pred=0.4206 hidden=0.7703
+  cond_frames=8 cond_lat=2 future_slots=10 cfg=7.0 sigma=2.0 K=10 x_final=0.1525 gain=-0.7368 seq=0.0250 seq_gain=-0.7815 pred=0.1526 hidden=0.8996
+
+Best overall: cond_frames=1 future_slots=1 cfg=7.0 sigma=2.0 K=5 gain=-0.4099 x_final=0.4182 seq_gain=-0.4099

@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+*.swp
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Experiment tracking
+wandb/
+runs/
+logs/
+*.log
+
+# Large datasets, weights, caches, and generated tensors
+datasets/
+checkpoints/
+cache/
+caches/
+outputs/
+features.npy
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.npz
+*.npy
+*.parquet
+*.mp4
+*.avi
+*.mov
+
+# Keep curated lightweight result tables and figures under results/
+!results/**
+results/**/*.pt
+results/**/*.pth
+results/**/*.ckpt
+results/**/*.safetensors
+results/**/*.npy
+results/**/*.npz
+results/**/*.parquet
+results/**/*.mp4
