@@ -1,0 +1,40 @@
+policy_name: model2robotwin_interface
+task_name: null
+task_config: null
+ckpt_setting: null
+seed: null
+instruction_type: unseen
+
+# StarVLA Client Parameters
+host: "127.0.0.1"
+port: 5694
+unnorm_key: "new_embodiment"
+action_mode: "delta"
+normalization_mode: "min_max"  # options: min_max, q99
+# policy_ckpt_path is injected at runtime by eval.sh via --overrides
+
+# Async inference is disabled while investigating chunk-boundary jitter.
+async_inference: false
+chunk_transition: "rtc"           # options: replace, rtc
+async_result_cache_size: 2        # keeps recent completed chunks for future handoff strategies
+
+# Client-side RTC handoff. This is model/action-head agnostic because it blends
+# decoded raw action chunks in the DOMINO client, after server inference.
+rtc_execution_horizon: 10         # prefix steps blended with the old active chunk
+rtc_max_guidance_weight: 10.0     # old-plan strength; 10.0 maps to ~0.91 max blend weight
+rtc_prefix_attention_schedule: "exp"  # options: exp, linear, ones, zeros
+rtc_inference_delay: "auto"       # auto = activation_step - request_source_step; or set an integer
+rtc_compensate_inference_delay: true  # skip stale new actions before activating the returned chunk
+rtc_blend_dims: null              # null=use action stats mask; "all", "none", or explicit dims like [0,1,2]
+
+# Historical context for Cosmos Video2World. With multi_view_concat=true, each
+# temporal frame is [head | left_wrist | right_wrist], so WM4A still receives
+# one video stream while seeing all three DOMINO cameras.
+image_size: [224, 224]     # per-view resize before horizontal concat
+multi_view_concat: true
+history_k: 4
+history_stride: 1
+history_mode: "frames"    # "frames" is required when history_as_video_frames=true
+history_as_video_frames: true
+history_image_size: [224, 224]  # per-view size; concat frame becomes 224x672
+# history_flow_compute_size: [128, 128]

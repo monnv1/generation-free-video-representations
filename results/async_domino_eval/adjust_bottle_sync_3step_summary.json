@@ -1,0 +1,65 @@
+{
+  "source_log": "adjust_bottle_demo_clean_dynamic_slot0_gpu0_port5694_eval.log",
+  "rollout": {
+    "successes": 14,
+    "episodes": 100,
+    "success_rate_percent": 14.0
+  },
+  "timing_rows": 32047,
+  "async_enabled_rows": 0,
+  "async_activations": 0,
+  "rtc_applied_rows": 0,
+  "sync_block_rows": 0,
+  "timing_ms": {
+    "eval_total_ms": {
+      "count": 32047,
+      "mean": 102.29572150279276,
+      "p50": 53.634,
+      "p95": 764.7566999999998,
+      "max": 4230.123
+    },
+    "websocket_roundtrip_ms": {
+      "count": 32047,
+      "mean": 45.756686803756985,
+      "p50": 0.0,
+      "p95": 713.5011,
+      "max": 4111.305
+    },
+    "server_total_ms": {
+      "count": 2016,
+      "mean": 724.4724732142857,
+      "p50": 719.59,
+      "p95": 749.65675,
+      "max": 4063.44
+    },
+    "server_model_inference_ms": {
+      "count": 2016,
+      "mean": 450.7657385912699,
+      "p50": 447.6825,
+      "p95": 476.1735,
+      "max": 634.874
+    },
+    "server_action_head_ms": {
+      "count": 2016,
+      "mean": 53.70446825396826,
+      "p50": 52.6095,
+      "p95": 59.1135,
+      "max": 607.222
+    },
+    "chunk_request_interval_ms": {
+      "count": 1916,
+      "mean": 2406.8524034446764,
+      "p50": 2352.5675,
+      "p95": 2831.0420000000004,
+      "max": 6099.74
+    }
+  },
+  "rtc_inference_delay_steps": {
+    "count": 2016,
+    "mean": 0.0,
+    "p50": 0.0,
+    "p95": 0.0,
+    "max": 0.0
+  },
+  "interpretation_limit": "Characterizes one asynchronous run. A matched synchronous run is required to attribute a latency or success-rate change to asynchronous execution."
+}

@@ -1,0 +1,50 @@
+{
+  "scope": "single saved frame pair; representation diagnostic only",
+  "latent_file": "first_two_future_latents_with_pred.pt",
+  "current_frame": "decoded_current_frame.png",
+  "future_frame": "decoded_true_future_frame0.png",
+  "latent_keys": [
+    "current_latent",
+    "true_t_plus_1"
+  ],
+  "latent_grid": [
+    88,
+    160
+  ],
+  "pixel_shape": [
+    704,
+    1280
+  ],
+  "num_spatial_cells": 14080,
+  "spearman_rho": 0.34983758616909,
+  "spearman_pvalue": 0.0,
+  "pearson_r": 0.650105893611908,
+  "pearson_pvalue": 0.0,
+  "topk": [
+    {
+      "fraction": 0.01,
+      "cells_per_set": 141,
+      "precision_recall": 0.2553191489361702,
+      "iou": 0.14634146341463414,
+      "random_expected_precision_recall": 0.010014204545454545,
+      "random_expected_iou": 0.005032299511046076
+    },
+    {
+      "fraction": 0.05,
+      "cells_per_set": 704,
+      "precision_recall": 0.6434659090909091,
+      "iou": 0.4743455497382199,
+      "random_expected_precision_recall": 0.05,
+      "random_expected_iou": 0.025641025641025644
+    },
+    {
+      "fraction": 0.1,
+      "cells_per_set": 1408,
+      "precision_recall": 0.6619318181818182,
+      "iou": 0.49469214437367304,
+      "random_expected_precision_recall": 0.1,
+      "random_expected_iou": 0.052631578947368425
+    }
+  ],
+  "interpretation_limit": "Measures spatial association with decoded RGB change. It does not establish linearity, causality, semantic disentanglement, or downstream control benefit."
+}

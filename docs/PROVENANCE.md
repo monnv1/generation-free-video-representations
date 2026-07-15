@@ -40,3 +40,16 @@ state.
 The original directories remain untouched. Saved configs and JSON files may
 contain absolute `/data/...` paths; these are retained as provenance and are not
 secrets.
+
+## Added Resume-Project Evidence
+
+| Consolidated path | Original source |
+|---|---|
+| `integrations/starvla_domino` | `/data/repos/starVLA`, commit `db8fe59` plus the 2026-07-15 working tree |
+| `results/latent_motion_probe/single_pair_metrics.json` | `first_two_future_latents_with_pred.pt` plus decoded current/future PNGs in the original causal probe |
+| `results/async_domino_eval/adjust_bottle_async_summary.json` | 2026-05-17 `adjust_bottle` async evaluation log under `/data/checkpoints/StarVLA_DOMINO` |
+| `results/async_domino_eval/adjust_bottle_sync_3step_summary.json` | 2026-05-24 synchronous CFG=7/sigma=1/K=3 evaluation log under `/data/checkpoints/StarVLA_DOMINO` |
+
+The raw `.pt` tensor and multi-megabyte step logs remain excluded. The committed
+JSON files are generated summaries, and the offline generation scripts live in
+`tools/`.
