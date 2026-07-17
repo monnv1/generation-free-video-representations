@@ -1,10 +1,5 @@
 {
   "source_log": "adjust_bottle_demo_clean_dynamic_slot0_gpu0_port5694_eval.log",
-  "rollout": {
-    "successes": 18,
-    "episodes": 100,
-    "success_rate_percent": 18.0
-  },
   "timing_rows": 31029,
   "async_enabled_rows": 31029,
   "async_activations": 11641,
@@ -61,5 +56,5 @@
     "p95": 3.0,
     "max": 6.0
   },
-  "interpretation_limit": "Characterizes one asynchronous run. A matched synchronous run is required to attribute a latency or success-rate change to asynchronous execution."
+  "interpretation_limit": "Characterizes one asynchronous run. A matched synchronous run is required to attribute a latency change to asynchronous execution."
 }

@@ -4,6 +4,16 @@ Research code, diagnostics, and deployment artifacts for reusing a pretrained
 Cosmos video world model without explicitly generating future video at policy
 inference time.
 
+## What This Project Does
+
+This project studies efficient multimodal inference with pretrained video-diffusion
+models. Instead of spending the control-time budget on denoising and decoding a
+future RGB video, it reuses Cosmos VAE latents or DiT hidden states as compact
+spatiotemporal visual tokens for a downstream action policy. Asynchronous action
+chunks and RTC handoff then keep world-model inference outside the control-critical
+path. The central question is whether the model's learned motion prior remains
+useful when future pixels are never explicitly generated.
+
 ## Problem
 
 Video diffusion models learn spatial, temporal, and language-conditioned priors,
@@ -51,16 +61,29 @@ downstream policy improvement.
 
 ### Dynamic-task rollouts
 
-Representative DOMINO `adjust_bottle` episodes from the 100-episode
-clean-latent + async/RTC evaluation. Click an image to open the MP4.
+Representative DOMINO `adjust_bottle` episodes from the single-task
+clean-latent evaluation. Click an image to open the MP4.
 
 | Success: 96 steps | Success: 100 steps | Failure: target out of bounds |
 |---|---|---|
 | [![Successful rollout, 96 steps](demo/assets/success-fast-poster.jpg)](demo/assets/success-fast.mp4) | [![Successful rollout, 100 steps](demo/assets/success-second-poster.jpg)](demo/assets/success-second.mp4) | [![Failed rollout, target out of bounds](demo/assets/failure-oob-poster.jpg)](demo/assets/failure-oob.mp4) |
 
-| Success rate | Manipulation score | Route completion | Out-of-bounds episodes |
-|---:|---:|---:|---:|
-| 18.0% | 28.96 | 30.45 | 14 |
+| Episodes | Successes | Success rate | MS mean | Route completion mean |
+|---:|---:|---:|---:|---:|
+| 100 | 23 | **23.0%** | 30.86 | 30.86 |
+
+For per-task context, 23% is above several published DOMINO baselines on
+`adjust_bottle`: OpenVLA (0%), VLA-Adapter (9%), pi0-FAST (11%), RDT-1 (18%),
+pi0 (19%), Isaac-GR00T (19%), and InternVLA-M1 (20%). It remains below pi0.5
+(52%), OpenVLA-OFT (58%), and PUMA (65%). These numbers come from Table 16 of
+the [DOMINO/PUMA paper](https://arxiv.org/abs/2603.15620). Our adapter uses
+single-task training while the published VLA baselines use different multi-task
+recipes, so the comparison provides scale rather than a controlled SOTA claim.
+
+The source summary reports `total_episodes=100`, `success_count=23`,
+`success_rate=23.0`, `manipulation_score_mean=30.8563`, and
+`route_completion_mean=30.8563`. Its associated run uses the
+`adjust_bottle_demo_clean_dynamic_slot0_gpu0_port5694_{server,eval}.log` naming.
 
 ## Approach
 
@@ -88,19 +111,19 @@ The work has three stages:
 
 Two `adjust_bottle` configurations were evaluated for 100 DOMINO episodes:
 
-| Configuration | Execution | Success | Model inference p50 | Step latency p95 |
-|---|---|---:|---:|---:|
-| clean latent | async + RTC | 18/100 | 92.2 ms | 124.7 ms |
-| CFG=7, sigma=1, K=3 | synchronous | 14/100 | 447.7 ms | 764.8 ms |
+| Configuration | Execution | Model inference p50 | Step latency p95 |
+|---|---|---:|---:|
+| clean latent | async + RTC | 92.2 ms | 124.7 ms |
+| CFG=7, sigma=1, K=3 | synchronous | 447.7 ms | 764.8 ms |
 
 The clean async run returned completed chunks with a median three-control-step
 delay; RTC compensated stale prefix actions and blended overlapping old/new
 chunks. See [`integrations/starvla_domino`](integrations/starvla_domino) and the
 [`async evaluation summaries`](results/async_domino_eval).
 
-These configurations change both execution mode and denoising. Their latency and
-success differences are configuration-level observations, not causal estimates
-of either asynchronous execution or denoising alone.
+These configurations change both execution mode and denoising. Their latency
+differences are configuration-level observations, not a causal estimate of either
+asynchronous execution or denoising alone.
 
 ## Negative Findings That Shaped The Design
 
@@ -148,8 +171,9 @@ running model-dependent experiments.
 ## Limitations
 
 - The quantitative latent-locality result currently covers one saved frame pair.
-- The 18% and 14% runs are different system configurations, not a one-variable A/B.
-- Closed-loop success is from one task and does not establish generalization.
+- The 23% result is from one single-task checkpoint and does not establish
+  cross-task generalization.
+- The two latency runs are different system configurations, not a one-variable A/B.
 - The native UV evaluator has a known cross-batch weighting issue; those absolute
   MAE values remain archival rather than headline results.
 - Several exploratory sweeps selected configurations on the test set and lack

@@ -10,12 +10,12 @@ datasets, latent caches, and raw evaluation logs are intentionally excluded.
 - `causal_denoise_probe/outputs/save_latents_test/latent_heatmap_top5pct_overlay.png`:
   qualitative top-5% latent-change overlay for the same experiment track.
 - `async_domino_eval/adjust_bottle_async_summary.json`: clean-latent async/RTC
-  run, `18/100` success.
+  latency summary.
 - `async_domino_eval/adjust_bottle_sync_3step_summary.json`: synchronous
-  CFG=7/sigma=1/K=3 run, `14/100` success.
+  CFG=7/sigma=1/K=3 latency summary.
 
-The two DOMINO summaries describe different system configurations. They are not
-a matched one-variable sync/async or denoise/no-denoise ablation.
+The two DOMINO timing summaries describe different system configurations. They
+are not a matched one-variable sync/async or denoise/no-denoise ablation.
 
 ## Archived exploratory probes
 
