@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Visual evidence for generation-free reuse of pretrained video-diffusion representations."
+    />
+    <title>Generation-Free Video Representations</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#overview" aria-label="Generation-Free Video Representations">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>Generation-Free Video Representations</span>
+      </a>
+      <nav aria-label="Demo sections">
+        <a href="#representation">Representation</a>
+        <a href="#system">System</a>
+        <a href="#rollouts">Rollouts</a>
+        <a href="../README.md">Repository</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="overview" id="overview">
+        <div class="overview-copy">
+          <p class="eyebrow">Research demo · Cosmos-Predict2 · DOMINO simulation</p>
+          <h1>Skip video rendering.<br />Reuse its internal dynamics.</h1>
+          <p class="lead">
+            We study whether downstream temporal tasks need a completed diffusion sample at all.
+            Instead of finishing the native denoising chain and decoding pixels, the policy consumes
+            pretrained video-model representations directly.
+          </p>
+          <div class="scope-note">
+            <strong>Claim boundary</strong>
+            <span>This is task-level generation bypass, not a faster Cosmos sampler.</span>
+          </div>
+        </div>
+
+        <div class="route-comparison" aria-label="Inference route comparison">
+          <div class="route route-muted">
+            <div class="route-heading">
+              <span class="route-index">A</span>
+              <div>
+                <p>Native generation route</p>
+                <strong>Noise → DiT × 35 → VAE decode</strong>
+              </div>
+            </div>
+            <div class="route-steps" aria-hidden="true">
+              <span>History</span><i></i><span>35-step sampling</span><i></i><span>Future RGB</span>
+            </div>
+            <p class="route-caption">Required when pixels are the output. Potentially redundant for state readout.</p>
+          </div>
+          <div class="route route-active">
+            <div class="route-heading">
+              <span class="route-index">B</span>
+              <div>
+                <p>Generation-free route</p>
+                <strong>History → clean latent → adapter</strong>
+              </div>
+            </div>
+            <div class="route-steps" aria-hidden="true">
+              <span>History</span><i></i><span>Latent / hidden</span><i></i><span>Decision</span>
+            </div>
+            <p class="route-caption">No future-video sampling or pixel decoding on the downstream path.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="metric-strip" aria-label="Headline evidence">
+        <article>
+          <span>Latent–RGB rank correlation</span>
+          <strong>0.350</strong>
+          <small>single-pair pilot</small>
+        </article>
+        <article>
+          <span>Top-5% spatial overlap</span>
+          <strong>64.3%</strong>
+          <small>5.0% random reference</small>
+        </article>
+        <article>
+          <span>Async step latency</span>
+          <strong>124.7 ms</strong>
+          <small>P95, clean-latent configuration</small>
+        </article>
+        <article>
+          <span>Dynamic-task success</span>
+          <strong>18 / 100</strong>
+          <small>DOMINO adjust_bottle</small>
+        </article>
+      </section>
+
+      <section class="evidence-section" id="representation">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">01 · Representation evidence</p>
+            <h2>Where the latent changes, the scene often changes.</h2>
+          </div>
+          <p>
+            Channel-wise L2 differences between adjacent VAE latent slots are reduced to an
+            88 × 160 spatial map and compared with decoded RGB change on the same grid.
+          </p>
+        </div>
+
+        <div class="representation-grid">
+          <figure class="primary-figure">
+            <img src="assets/latent-top5-overlay.png" alt="Top five percent latent change overlaid on the robot scene" />
+            <figcaption>
+              <span>Top-5% latent-change overlay</span>
+              <strong>Motion-sensitive spatial response</strong>
+            </figcaption>
+          </figure>
+          <div class="supporting-figures">
+            <figure>
+              <img src="assets/current-frame.png" alt="Decoded current robot scene" />
+              <figcaption>Current decoded frame</figcaption>
+            </figure>
+            <figure>
+              <img src="assets/future-frame.png" alt="Decoded future robot scene" />
+              <figcaption>Decoded future frame</figcaption>
+            </figure>
+            <figure class="wide-figure">
+              <img src="assets/pixel-difference.png" alt="Pixel difference between decoded current and future frames" />
+              <figcaption>Decoded RGB difference</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="interpretation-band">
+          <div>
+            <span>What it supports</span>
+            <p>Spatial locality and sensitivity to visible temporal change.</p>
+          </div>
+          <div>
+            <span>What it does not prove</span>
+            <p>Linearity, semantic disentanglement, causal prediction, or policy improvement.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="system-section" id="system">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">02 · System evidence</p>
+            <h2>Move model inference off the control critical path.</h2>
+          </div>
+          <p>
+            An asynchronous worker requests the next action chunk while the simulator executes the
+            current one. RTC compensates stale prefix actions and blends the overlapping handoff.
+          </p>
+        </div>
+
+        <div class="timeline" aria-label="Asynchronous inference timeline">
+          <div class="timeline-labels">
+            <span>Observation</span><span>Inference pending</span><span>Result ready</span><span>RTC handoff</span>
+          </div>
+          <div class="timeline-track">
+            <i class="observation-dot"></i>
+            <span class="inference-bar">Async model request</span>
+            <i class="result-dot"></i>
+            <span class="handoff-bar">Old / new chunk overlap</span>
+          </div>
+          <div class="execution-track">
+            <span>Execute active action chunk</span>
+            <span>Activate delay-compensated chunk</span>
+          </div>
+        </div>
+
+        <div class="comparison-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Saved system configuration</th>
+                <th>Execution</th>
+                <th>Model P50</th>
+                <th>Step P95</th>
+                <th>Success</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="highlight-row">
+                <td>Clean latent</td>
+                <td>Async + RTC</td>
+                <td>92.2 ms</td>
+                <td>124.7 ms</td>
+                <td>18 / 100</td>
+              </tr>
+              <tr>
+                <td>CFG 7 · σ 1 · K 3</td>
+                <td>Synchronous</td>
+                <td>447.7 ms</td>
+                <td>764.8 ms</td>
+                <td>14 / 100</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="table-note">
+            Configuration-level comparison only. Denoising and execution mode change together, so
+            the difference is not a causal estimate of either mechanism alone.
+          </p>
+        </div>
+      </section>
+
+      <section class="rollout-section" id="rollouts">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">03 · Downstream behavior</p>
+            <h2>Dynamic-task rollouts, including failure.</h2>
+          </div>
+          <p>
+            Representative DOMINO simulation episodes from the 100-episode clean-latent + async/RTC run.
+          </p>
+        </div>
+
+        <div class="video-grid">
+          <article class="video-item">
+            <div class="video-frame">
+              <video controls muted loop playsinline preload="metadata" poster="assets/success-fast-poster.jpg">
+                <source src="assets/success-fast.mp4" type="video/mp4" />
+              </video>
+              <span class="status success">Success</span>
+            </div>
+            <div class="video-meta">
+              <div><strong>Fast completion</strong><span>Episode 22 · seed 100032</span></div>
+              <span>96 steps</span>
+            </div>
+          </article>
+
+          <article class="video-item">
+            <div class="video-frame">
+              <video controls muted loop playsinline preload="metadata" poster="assets/success-second-poster.jpg">
+                <source src="assets/success-second.mp4" type="video/mp4" />
+              </video>
+              <span class="status success">Success</span>
+            </div>
+            <div class="video-meta">
+              <div><strong>Stable completion</strong><span>Episode 18 · seed 100024</span></div>
+              <span>100 steps</span>
+            </div>
+          </article>
+
+          <article class="video-item">
+            <div class="video-frame">
+              <video controls muted loop playsinline preload="metadata" poster="assets/failure-oob-poster.jpg">
+                <source src="assets/failure-oob.mp4" type="video/mp4" />
+              </video>
+              <span class="status failure">Failure</span>
+            </div>
+            <div class="video-meta">
+              <div><strong>Target out of bounds</strong><span>Episode 3 · seed 100003</span></div>
+              <span>83 steps</span>
+            </div>
+          </article>
+        </div>
+
+        <div class="rollout-summary">
+          <div><span>Success rate</span><strong>18.0%</strong></div>
+          <div><span>Manipulation score</span><strong>28.96</strong></div>
+          <div><span>Route completion</span><strong>30.45</strong></div>
+          <div><span>Out-of-bounds episodes</span><strong>14</strong></div>
+        </div>
+      </section>
+
+      <section class="finding-section">
+        <div>
+          <p class="eyebrow">Research outcome</p>
+          <h2>Truncated generation was tested, not assumed.</h2>
+        </div>
+        <div class="finding-list">
+          <p><strong>240 / 240</strong><span>causal history × sigma × step settings did not beat repeat-last latent.</span></p>
+          <p><strong>225 / 225</strong><span>native denoising layer × horizon settings were less readable than raw representations.</span></p>
+          <p><strong>Conclusion</strong><span>For the tested readouts, bypassing generation was more defensible than naively truncating it.</span></p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div>
+        <strong>Generation-Free Video Representations</strong>
+        <span>Exploratory research artifacts · results are scoped to the documented settings.</span>
+      </div>
+      <div class="footer-links">
+        <a href="../docs/PROJECT_STORY_ZH.md">Project story</a>
+        <a href="../docs/REPRODUCIBILITY.md">Reproducibility</a>
+        <a href="../results/README.md">All results</a>
+      </div>
+    </footer>
+  </body>
+</html>

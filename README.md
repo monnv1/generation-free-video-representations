@@ -4,6 +4,9 @@ Research code, diagnostics, and deployment artifacts for reusing a pretrained
 Cosmos video world model without explicitly generating future video at policy
 inference time.
 
+**[Open the visual research demo](demo/index.html)** to inspect latent-change
+evidence, asynchronous inference timing, and representative DOMINO rollouts.
+
 ## Problem
 
 Video diffusion models learn spatial, temporal, and language-conditioned priors,
