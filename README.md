@@ -4,9 +4,6 @@ Research code, diagnostics, and deployment artifacts for reusing a pretrained
 Cosmos video world model without explicitly generating future video at policy
 inference time.
 
-**[Open the visual research demo](demo/index.html)** to inspect latent-change
-evidence, asynchronous inference timing, and representative DOMINO rollouts.
-
 ## Problem
 
 Video diffusion models learn spatial, temporal, and language-conditioned priors,
@@ -18,6 +15,52 @@ the best representation for a downstream decision policy. This project asks:
 
 This is a representation-reuse and systems project. It does not claim to reduce
 the FLOPs of Cosmos itself.
+
+## Demo
+
+The project compares two inference routes:
+
+```text
+Native generation:  history -> noise -> DiT denoising x35 -> VAE decode -> future RGB
+Generation-free:    history -> clean latent / hidden state -> adapter -> downstream output
+```
+
+### Latent motion locality
+
+Adjacent Cosmos VAE latent slots are differenced channel-wise and mapped back to
+the image grid. In the saved single-pair pilot, high-change latent regions align
+with the main visible changes in the scene.
+
+| Current frame | Future frame |
+|---|---|
+| ![Current decoded frame](demo/assets/current-frame.png) | ![Future decoded frame](demo/assets/future-frame.png) |
+
+| RGB difference | Top-5% latent-change overlay |
+|---|---|
+| ![Decoded RGB difference](demo/assets/pixel-difference.png) | ![Top-five-percent latent overlay](demo/assets/latent-top5-overlay.png) |
+
+| Metric | Result | Random reference |
+|---|---:|---:|
+| Spearman correlation | 0.350 | approximately 0 |
+| Top-5% spatial overlap | 64.3% | 5.0% |
+| Top-5% IoU | 0.474 | 0.026 |
+
+This supports spatial locality and sensitivity to visible temporal change. It
+does not prove VAE linearity, semantic disentanglement, causal prediction, or
+downstream policy improvement.
+
+### Dynamic-task rollouts
+
+Representative DOMINO `adjust_bottle` episodes from the 100-episode
+clean-latent + async/RTC evaluation. Click an image to open the MP4.
+
+| Success: 96 steps | Success: 100 steps | Failure: target out of bounds |
+|---|---|---|
+| [![Successful rollout, 96 steps](demo/assets/success-fast-poster.jpg)](demo/assets/success-fast.mp4) | [![Successful rollout, 100 steps](demo/assets/success-second-poster.jpg)](demo/assets/success-second.mp4) | [![Failed rollout, target out of bounds](demo/assets/failure-oob-poster.jpg)](demo/assets/failure-oob.mp4) |
+
+| Success rate | Manipulation score | Route completion | Out-of-bounds episodes |
+|---:|---:|---:|---:|
+| 18.0% | 28.96 | 30.45 | 14 |
 
 ## Approach
 
@@ -39,26 +82,7 @@ The work has three stages:
 2. test whether short-chain denoising improves causal or probe-level dynamics;
 3. integrate clean latents into a closed-loop policy with asynchronous inference.
 
-## Key Evidence
-
-### Latent motion locality
-
-For one saved frame pair, the channelwise latent L2 delta was compared with the
-decoded RGB-change map on the same `88 x 160` spatial grid.
-
-| Metric | Result | Random reference |
-|---|---:|---:|
-| Spearman correlation | 0.350 | approximately 0 |
-| Top-5% cell overlap | 64.3% | 5.0% |
-| Top-5% IoU | 0.474 | 0.026 |
-
-![Top-5% latent change overlay](results/causal_denoise_probe/outputs/save_latents_test/latent_heatmap_top5pct_overlay.png)
-
-This is a single-pair representation diagnostic. It supports spatial locality and
-motion sensitivity, not VAE linearity, semantic disentanglement, causal future
-prediction, or downstream policy benefit. The metric is reproducible with
-[`tools/analyze_latent_motion.py`](tools/analyze_latent_motion.py); the saved
-summary is [`single_pair_metrics.json`](results/latent_motion_probe/single_pair_metrics.json).
+## System Results
 
 ### Closed-loop system configurations
 
